@@ -1,0 +1,112 @@
+[
+        {
+            "id": 0,
+            "prompt": "Play only on the upbeat",
+            "dependancies": [],
+            "exclusions": [1]
+        },
+        {
+            "id": 1,
+            "prompt": "Play power-chord triplets",
+            "dependancies": [],
+            "exclusions": [0]
+        },
+        {
+            "id": 2,
+            "prompt": "You can't play the low E string",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 3,
+            "prompt": "Only play within the minor pentatonic",
+            "dependancies": [],
+            "exclusions": [4]
+        },
+        {
+            "id": 4,
+            "prompt": "Play in the relative major/minor",
+            "dependancies": [],
+            "exclusions": [3]
+        },
+        {
+            "id": 5,
+            "prompt": "Alternate single bars with the vocalist",
+            "dependancies": [15],
+            "exclusions": [12]
+        },
+        {
+            "id": 6,
+            "prompt": "Notes must start on the kick drum and end on the snare",
+            "dependancies": [],
+            "exclusions": [10]
+        },
+        {
+            "id": 7,
+            "prompt": "You can't play the tonic of the chord",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 8,
+            "prompt": "Play a walking bassline",
+            "dependancies": [],
+            "exclusions": [6,7]
+        },
+        {
+            "id": 9,
+            "prompt": "Play double time",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 10,
+            "prompt": "No kick or snare",
+            "dependancies": [],
+            "exclusions": [6]
+        },
+        {
+            "id": 11,
+            "prompt": "No cymbals",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 12,
+            "prompt": "Play some organ shit",
+            "dependancies": [],
+            "exclusions": [13]
+        },
+        {
+            "id": 13,
+            "prompt": "Make it 80's synth pop-y",
+            "dependancies": [],
+            "exclusions": [12]
+        },
+        {
+            "id": 14,
+            "prompt": "Play bass notes only",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 15,
+            "prompt": "Alternate single bars with the Lead guitarist",
+            "dependancies": [5],
+            "exclusions": []
+        },
+        {
+            "id": 16,
+            "prompt": "Sing like a Sim",
+            "dependancies": [],
+            "exclusions": [17]
+        },
+        {
+            "id": 17,
+            "prompt": "Whistle",
+            "dependancies": [],
+            "exclusions": [16]
+        }
+        
+      
+    ]
