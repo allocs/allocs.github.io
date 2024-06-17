@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const HomePage = () => {
   return (
     <section className='flex h-screen space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
-        <div className='flex space-x-8 items-center m-auto'>
+        <div className='flex flex-wrap space-x-8 items-center m-auto'>
         <div className='flex'>
             <Link
                 to="/HostGame"
