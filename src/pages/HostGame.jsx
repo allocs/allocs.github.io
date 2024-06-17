@@ -262,7 +262,7 @@ const HostGame = () => {
     else return (
     <div className='border border-b-8 border-backgroundblack bg-backgroundblack h-screen'>
       <div className='flex space-x-16 w-screen bg-buttongold items-center border-8 border-backgroundblack'>
-        <div className='bg-buttongold text-outlinebrown text-8xl lg:text-6xl md:text-4xl sm:text-2xl text-font-bold py-2 px-4  '>
+        <div className='bg-buttongold text-outlinebrown text-2xl  md:text-4xl lg:text-6xl xl:text-8xl font-bold py-2 px-4  '>
           ROOM ID: {peerId}
         </div>
         {}

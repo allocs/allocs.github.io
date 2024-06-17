@@ -55,7 +55,7 @@ const HostCard = ({ children, inst, name }) => {
             src={imageOfInstrument}
             alt={instrumentName}
         />
-        <h2 className='text-2xl md:text-lg lg:text-xl font-bol text-center'>{instrumentName}</h2>
+        <h2 className=' text-lg lg:text-xl xl:text-2xl font-bol text-center'>{instrumentName}</h2>
         { children }
     </div>
 };
