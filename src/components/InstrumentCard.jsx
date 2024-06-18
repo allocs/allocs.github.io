@@ -26,7 +26,7 @@ const InstrumentCard = ({ inst, selected, onSelect }) => {
             break;
         case 2:
             instrumentName = 'Bass Guitar';
-            imageOfInstrument = isSelected ? instrument2 : instrument2;
+            imageOfInstrument = isSelected ? instrument2selected : instrument2;
             break;
         case 3:
             instrumentName = 'Drums';
