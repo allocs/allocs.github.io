@@ -183,7 +183,7 @@ if (gameStarted){
           </div>
           :<>{ isConnected 
             ? <div className='flex h-screen space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
-            <div className='flex space-x-8 items-center m-auto'> 
+            <div className='flex flex-wrap space-x-8 items-center m-auto'> 
             <div className='text-2xl bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'>
             Set a Username:
                 <input type="text" value={userName} onChange={e => setUserName(e.target.value)}  />
@@ -193,7 +193,7 @@ if (gameStarted){
               </div> 
               </div>    
             : <div className='flex h-screen space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
-              <div className='flex space-x-8 items-center m-auto'>
+              <div className='flex flex-wrap space-x-8 items-center m-auto'>
                 <div className='text-2xl bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'>
                   ENTER A ROOMCODE: <input type="text" value={room} onChange={e => setRoom(e.target.value)} />
                 </div>
