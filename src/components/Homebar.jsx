@@ -50,7 +50,7 @@ const Homebar = () => {
   return (
     <nav className= {dynamicClassName}>
       <div className='mx-auto max-w-7x1 px-2 sm:px6 lg:px-8'>
-        <div className='flex h-20 items-center justify-between'>
+        <div className='flex h-20 items-center justify-center xl:justify-between'>
           <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
             <NavLink className='flex flex-shrink-0 items-center mr-4' to='/'>
               <img
