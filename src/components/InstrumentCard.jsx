@@ -47,7 +47,7 @@ const InstrumentCard = ({ inst, selected, onSelect }) => {
 
     return ( <>{isSelected  
      ?<button className='bg-backgroundgray p-10 rounded-lg'>
-        <div className='container-xl size-32 lg:size-36 xl:size-48 m-auto'>
+        <div className='container-xl size-28 lg:size-36 xl:size-48 m-auto'>
             <h2 className='text-xl xl:text-3xl font-bold text-offwhite xl:mb-6 text-center items-center'>
                 {instrumentName}
             </h2>
@@ -58,7 +58,7 @@ const InstrumentCard = ({ inst, selected, onSelect }) => {
         </div>
     </button>
     :<button className='bg-buttongold hover:bg-buttondarkgold p-10 rounded-lg' onClick={onSelect}>
-        <div className='container-xl size-32 lg:size-36 xl:size-48 m-auto'>
+        <div className='container-xl size-28 lg:size-36 xl:size-48 m-auto'>
             <h2 className='text-xl xl:text-3xl font-bold text-outlinebrown xl:mb-6 text-center place-items-center'>
                 {instrumentName}
             </h2>
