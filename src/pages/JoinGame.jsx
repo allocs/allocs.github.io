@@ -3,6 +3,8 @@ import {Peer } from 'peerjs';
 import { useEffect, useState, useRef } from 'react';
 import InstrumentCard from '../components/InstrumentCard';
 import prompts from '../prompts.json';
+import chordProgressions from '../chordProgressions.json'
+import ChordCard from '../components/ChordCard';  
 
 
 
@@ -18,7 +20,8 @@ const JoinGame = () => {
     const [gameStarted, setGameStarted] = useState(false);
     const [bpm, setBpm] = useState('0');
     const [key, setKey] = useState('-1');
-    const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','Db minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
+    const [chordProgression, setChordProgression] = useState(-1);
+    const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
     const [myPrompts, setMyPrompts] = useState([]);
     var playerPrompts = [];
     
@@ -56,6 +59,10 @@ const JoinGame = () => {
                 const newMyPrompts = [...playerPrompts, newMyPrompt];
                 setMyPrompts([...newMyPrompts]);
                 playerPrompts = newMyPrompts;
+                break;
+              case 'C':
+                let newChordProgression = parseInt(data.substring(1));
+                setChordProgression(newChordProgression);
                 break;
               case 'X':
                 setGameStarted(false);
@@ -135,8 +142,9 @@ if (gameStarted){
     <div className='border border-b-8 border-backgroundblack bg-backgroundblack h-screen'>
       <div className='flex space-x-16 w-screen bg-buttongold items-center border-8 border-backgroundblack'>
         <div className='bg-buttongold text-outlinebrown text-4xl font-bold py-2   '>
-          {bpm} bpm, <br/>
-          {keys[key]} <br/>
+          {bpm} bpm <br/>
+          {chordProgressions[chordProgression].name} <br/>
+          in {keys[key]} <br/>
         </div>
       </div>
       <div className='flex-col space-x-16 px-4 w-screen bg-backgroundgray text-offwhite text-2xl justify-center border-8 border-backgroundblack'>
@@ -162,11 +170,29 @@ if (gameStarted){
             }
           })
         } <br/>
+        <div className='flex bg-backgroundblack'>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={false}/>
+    </div>
+    <div className='flex bg-backgroundblack'>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={false}/>
+    </div>
+    <div className='flex bg-backgroundblack'>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={false}/>
+    </div>
       </div>
     </div>
   )}
   else return (
-    <div>
+    <div className='h-screen bg-backgroundblack'>
         <hr />
         <>{ waitingRoom
           ? <div className='grid grid-cols-2 place-items-center bg-backgroundblack border-8 border-backgroundblack h-screen'>

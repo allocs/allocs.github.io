@@ -3,6 +3,8 @@ import Peer from 'peerjs';
 import HostCard from '../components/HostCard';
 import { useEffect, useState, useRef } from 'react';
 import prompts from '../prompts.json';
+import chordProgressions from '../chordProgressions.json';
+import ChordCard from '../components/ChordCard';
 
 const HostGame = () => {
   const [peerId, setPeerId] = useState('...');
@@ -13,8 +15,11 @@ const HostGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [bpm, setBpm] = useState('0');
   const [key, setKey] = useState('-1');
+  const [chordProgression, setChordProgression] = useState('-1');
   const instrumentBoundaries = [2,5,8,11,14,17]
-  const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','Db minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
+  const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
+
+
 
 
     useEffect(() => {
@@ -215,6 +220,14 @@ const HostGame = () => {
       const newKey = Math.floor(Math.random() * 24);
       setKey(newKey) //set the key (12 notes, major or minor)
       console.log(newBpm, keys[newKey]);
+      var newChordProgression;
+      //get a chord progression
+      do{
+        newChordProgression = Math.floor(Math.random() * Object.keys(chordProgressions).length);
+      //make sure the tonality of key and proj match
+      }while(chordProgressions[newChordProgression].tonality != newKey%2)
+      setChordProgression(newChordProgression);
+      console.log(chordProgressions);
       setGameStarted(true);
       var bandMatePromptIds = []
       //assign some prompts
@@ -229,8 +242,9 @@ const HostGame = () => {
         let currentConn = dataConnections[j];
         currentConn.send('B' + newBpm);
         currentConn.send('K' + newKey);
-        currentConn.send('P' + bandMatePromptIds[j*2])
-        currentConn.send('P' + bandMatePromptIds[j*2+1])
+        currentConn.send('C' + newChordProgression);
+        currentConn.send('P' + bandMatePromptIds[j*2]);
+        currentConn.send('P' + bandMatePromptIds[j*2+1]);
       }
     }
 
@@ -248,25 +262,49 @@ const HostGame = () => {
 
   if (gameStarted){
     return (
-      <div className='border border-b-8 border-backgroundblack bg-backgroundblack h-screen'>
-        <div className='flex flex-wrap space-x-16 w-screen bg-buttongold items-center border-8 border-backgroundblack'>
-        <div className='bg-buttongold text-outlinebrown text-8xl font-bold py-2 px-4  '>
-    {bpm} bpm, <br/>
-    {keys[key]} <br/>
+      <div className='bg-backgroundblack h-screen w-screen'>
+        <div className='flex flex-wrap space-x-16 bg-buttongold items-center border-8 border-backgroundblack'>
+        <div className='bg-buttongold text-outlinebrown text-8xl font-bold py-2  '>
+    {bpm} bpm <br/>
+    {chordProgressions[chordProgression].name} <br/>
+    in {keys[key]} <br/>
     </div>
     <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => endSession()}> End Jam </button>
+    </div>
+    {
+      //This is the volca beats looking chord chart
+    }
+    <div className='grid grid-cols-4 bg-backgroundgray w-screen border-backgroundblack justify-items-center'>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={false}/>
+    </div>
+    <div className='flex bg-backgroundgray'>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={false}/>
+    </div>
+    <div className='flex bg-backgroundgray'>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={false}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={false}/>
     </div>
   </div>
   
     )}
     else return (
     <div className='border border-b-8 border-backgroundblack bg-backgroundblack h-screen'>
-      <div className='flex space-x-16 w-screen bg-buttongold items-center border-8 border-backgroundblack'>
-        <div className='bg-buttongold text-outlinebrown text-2xl  md:text-4xl lg:text-6xl xl:text-8xl font-bold py-2 px-4  '>
+      <div className='grid grid-cols-3 bg-buttongold items-center justify-center border-8 border-backgroundblack'>
+        <div></div>
+        <div className='bg-buttongold text-outlinebrown text-2xl  md:text-4xl lg:text-6xl xl:text-8xl font-bold py-2 justify-self-stretch mx-auto'>
           ROOM ID: {peerId}
         </div>
-        {}
+        {}<div>
         <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => startGame()}>Start Game</button>
+        </div>
         <br/>
       </div>
       <div className='grid grid-cols-2 place-items-stretch gap-x-4 bg-backgroundblack border-8 border-backgroundblack h-max'>

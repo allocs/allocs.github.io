@@ -1,0 +1,102 @@
+[
+    {
+        "name": "i - VII - IV",
+        "tonality": 1,
+        "scaleDegrees": [-1, 7, 4, 4]
+    },
+    {
+        "name": "i - VII - VI - V",
+        "tonality": 1,
+        "scaleDegrees": [-1, 7, 6, 5]
+    },
+    {
+        "name": "i - iv - V7 - i",
+        "tonality": 1,
+        "scaleDegrees": [-1, -4, 75, -1]
+    },
+    {
+        "name": "ii - V - I",
+        "tonality": 0,
+        "scaleDegrees": [-2, 5, 1, 1]
+    },
+    {
+        "name": "i - VI - iv - V7",
+        "tonality": 1,
+        "scaleDegrees": [-1, 6, -4, 75]
+    },
+    {
+        "name": "I - V - vi - IV",
+        "tonality": 0,
+        "scaleDegrees": [1, 5, -6, 4]
+    },
+    {
+        "name": "I",
+        "tonality": 0,
+        "scaleDegrees": [1]
+    },
+    {
+        "name": "i",
+        "tonality": 1,
+        "scaleDegrees": [-1]
+    },
+    {
+        "name": "I - IV",
+        "tonality": 0,
+        "scaleDegrees": [1, 4]
+    },
+    {
+        "name": "i -iv",
+        "tonality": 1,
+        "scaleDegrees": [-1, -4]
+    },
+    {
+        "name": "i - IV",
+        "tonality": 1,
+        "scaleDegrees": [-1, 4]
+    },
+    {
+        "name": "I - IV - V - I",
+        "tonality": 0,
+        "scaleDegrees": [1, 4, 5, 1]
+    },
+    {
+        "name": "vi - IV - V - I",
+        "tonality": 0,
+        "scaleDegrees": [-6, 4, 5, 1]
+    },
+    {
+        "name": "vi - III - IV - I",
+        "tonality": 0,
+        "scaleDegrees": [-6, 3, 4, 1]
+    },
+    {
+        "name": "Standard 12 Bar Blues",
+        "tonality": 0,
+        "scaleDegrees": [1, 1, 1, 1, 4, 4, 1, 1, 5, 4, 1, 1]
+    },
+    {
+        "name": "Quick Change Blues",
+        "tonality": 0,
+        "scaleDegrees": [1, 4, 1, 1, 4, 4, 1, 1, 5, 4, 1, 1]
+    },
+    {
+        "name": "vi - IV - I - V",
+        "tonality": 0,
+        "scaleDegrees": [-6, 4, 1, 5]
+    },
+    {
+        "name": "Circle of Descending Fifths",
+        "tonality": 0,
+        "scaleDegrees": [1, 4, -17, -3, -6, -2, 5, 1]
+    },
+    {
+        "name": "Minor Circle of Decending Fifths",
+        "tonality": 1,
+        "scaleDegrees": [-1, -4, 7, 3, 6, -12, 5, -1]
+    },
+    {
+        "name": "Circle of Decending Fourths",
+        "tonality": 0,
+        "scaleDegrees": [6, 3, 7, 4, 1, 1, 1, 1]
+    }
+]
