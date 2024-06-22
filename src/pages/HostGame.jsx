@@ -18,9 +18,15 @@ const HostGame = () => {
   const [bpm, setBpm] = useState('0');
   const [key, setKey] = useState('-1');
   const [chordProgression, setChordProgression] = useState('-1');
-  const instrumentBoundaries = [2,5,8,11,14,17]
+  //const instrumentBoundaries = [2,5,8,11,14,17]
+  const instrumentPromptMapping = [[0,1,2,26,27,28,29,30],
+                                   [3,4,5],
+                                   [6,7,8],
+                                   [9,10,11],
+                                   [12,13,14],
+                                   [15,16,17,18,19,20,21,22,23,24,25]];
   const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
-  const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','4']];
+  const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','8']];
   const timeSignatureProbs = [50, 80, 88, 92, 95, 97, 99, 100];
 
 
@@ -169,18 +175,10 @@ const HostGame = () => {
       for(let l = 0; l < 2; l++){
         let goodPrompt = false;
         let promptId1 = -1;
-        var upperBound;
-        var lowerBound;
-        if(inst == 0){
-          upperBound = instrumentBoundaries[inst];
-          lowerBound = 0;
-        } else {
-          upperBound = instrumentBoundaries[inst];
-          lowerBound = instrumentBoundaries[inst - 1] + 1;
-        }
         do {
-          promptId1 = Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
+          promptId1 = instrumentPromptMapping[inst][Math.floor(Math.random() * instrumentPromptMapping[inst].length)];
           goodPrompt = true;
+          console.log(promptId1, 'promptId1')
           //make sure it isnt repeated
           if(bandMatePromptIds.length % 2)
             if(bandMatePromptIds[bandMatePromptIds.length-1] == promptId1) {
@@ -189,7 +187,7 @@ const HostGame = () => {
           //make sure prompt isn't hitting an exception
           check: {
             for(let j = 0; j < bandMatePromptIds.length; j++){
-              for(let k = 0; k < prompts[promptId1].exclusions.length; k++){
+              for(let k = 0; k < prompts[promptId1]?.exclusions.length; k++){
                 console.log(promptId1, 'promptId1')
                 console.log(prompts[promptId1].exclusions, 'exclusions')
                 if (bandMatePromptIds[j] == prompts[promptId1].exclusions[k]){
@@ -223,9 +221,11 @@ const HostGame = () => {
       for (let i = 0; i < timeSignatureProbs.length; i++){
         if (newTimeSigRoller <= timeSignatureProbs[i]){
           newTimeSig = i;
+          break;
         }
       }
       setTimeSig(newTimeSig);
+      console.log(newTimeSig);
       const newBpm = Math.floor(Math.random() * 160) + 40;
       setBpm(newBpm); //set the Bpm to a random number between 40 and 200
       const newKey = Math.floor(Math.random() * 24);
@@ -401,19 +401,19 @@ const HostGame = () => {
     {
       //This is the volca beats looking chord chart
     }
-    <div className='grid grid-cols-4 bg-backgroundgray w-screen border-backgroundblack justify-items-center'>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={false}/>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={true}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={false}/>
     </div>
-    <div className='flex bg-backgroundgray'>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={false}/>
     </div>
-    <div className='flex bg-backgroundgray'>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={false}/>
@@ -427,7 +427,8 @@ const HostGame = () => {
       <div className='grid grid-cols-3 bg-buttongold items-center justify-center border-8 border-backgroundblack'>
         <div></div>
         <div className='bg-buttongold text-outlinebrown text-2xl  md:text-4xl lg:text-6xl xl:text-8xl font-bold py-2 justify-self-stretch mx-auto'>
-          ROOM ID: {peerId}
+          ROOM ID: 
+          <div className='text-3xl md:text-5xl lg:text-8xl'>{peerId}</div>
         </div>
         {}<div>
         <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => startGame()}>Start Game</button>

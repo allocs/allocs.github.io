@@ -17,7 +17,9 @@ export default {
       'buttongold': '#FFEEBB',
       'buttondarkgold': '#D4AA5B',
       'outlinebrown': '#362711',
-      'offwhite':'#EBE8E0'
+      'offwhite':'#EBE8E0',
+      'yellowlight':'#fce47a',
+      'chordgold':'#8a7560'
     },
     extend: {
       fontFamily: {

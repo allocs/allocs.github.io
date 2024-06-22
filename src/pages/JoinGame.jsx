@@ -23,7 +23,7 @@ const JoinGame = () => {
     const [key, setKey] = useState('-1');
     const [chordProgression, setChordProgression] = useState(-1);
     const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
-    const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','4']];
+    const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','8']];
     const [myPrompts, setMyPrompts] = useState([]);
     var playerPrompts = [];
     
@@ -72,6 +72,8 @@ const JoinGame = () => {
                 break;
               case 'X':
                 setGameStarted(false);
+                const newEmptyArray = [];
+                setMyPrompts([...newEmptyArray]);
                 break;
               case 'E':
                 setWaitingRoom(false);
@@ -171,7 +173,7 @@ if (gameStarted){
       <div className='flex-col  w-screen bg-backgroundgray text-offwhite text-lg md:text-xl lg:text-2xl text-center border-8 border-backgroundblack'>
         {
           prompts && prompts.map( prompt => {
-            if (prompt.id == myPrompts[0]){
+            if (prompt.id == myPrompts[myPrompts.length-2]){
               return(
                 <div className= '' key = {prompt.id}>
                   {prompt.prompt}
@@ -182,7 +184,7 @@ if (gameStarted){
         } <br/>
         {
           prompts && prompts.map( prompt => {
-            if (prompt.id == myPrompts[1]){
+            if (prompt.id == myPrompts[myPrompts.length-1]){
               return(
                 <div className= '' key = {prompt.id}>
                   {prompt.prompt}
@@ -191,19 +193,19 @@ if (gameStarted){
             }
           })
         } <br/>
-        <div className='flex bg-backgroundgray text-backgroundgray'>
+        <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={false}/>
     </div>
-    <div className='flex bg-backgroundblack'>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={false}/>
     </div>
-    <div className='flex bg-backgroundblack'>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={false}/>

@@ -12,7 +12,7 @@ const ChordCard = ({ keyVal, chordProg, index, isSelected }) => {
     
     var myChordName = myKey[(offSet + (Math.abs(chord)%10) -1 )%7];
     if ( Math.abs(chord) < 10 ){
-        (chord > 0) ? myChordName += "maj" : myChordName += "min"
+        (chord > 0) ? myChordName += "" : myChordName += "m"
     }else{
         switch (Math.floor(Math.abs(chord)/10 % 10)){
             case 1:
@@ -48,16 +48,24 @@ const ChordCard = ({ keyVal, chordProg, index, isSelected }) => {
 
 
     return ( <>{isSelected  
-     ?<button className='bg-buttongold p-10 rounded-lg'>
-        <div className='container-xl size-28 lg:size-36 xl:size-48 m-auto font-bold text-backgroundgray'>
+     ?<button className='bg-chordgold rounded-lg pb-8'>
+        <button className='bg-yellowlight blur-sm text-outlinebrown font-bold h-3 w-3 mx-auto py-1 px-1   rounded-full'> </button>
+        <div className='m-auto font-bold py-2'>
         {myChordName}
 
         </div>
+        <div className='text-chordgold font-bold'>
+            G#sus4
+        </div>
     </button>
-    :<button className='bg-buttongold hover:bg-buttondarkgold p-10 rounded-lg'>
-        <div className='container-xl size-28 lg:size-36 xl:size-48 m-auto'>
+    :<button className='bg-chordgold  rounded-lg pb-8'>
+        <button className='bg-backgroundgray  text-outlinebrown font-bold h-2 w-2 mx-auto py-1 px-1   rounded-full'> </button>
+        <div className='m-auto font-bold py-2 '>
         {myChordName}
 
+        </div>
+        <div className='text-chordgold font-bold'>
+            G#sus4
         </div>
     </button>
     }
