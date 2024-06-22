@@ -448,35 +448,35 @@ const HostGame = () => {
         <HostCard inst = {bandMateInsts.length > 1 ? bandMateInsts[1] : -2} name = {(dataConnections.length <=1) ? '' : (bandMateNames.length <= 1) ? '...' : bandMateNames[1]}>
           <br/>
           {dataConnections.length > 1 && 
-            <button onClick={() => sendKick(1)}>Kick Player</button>
+            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(1)}>Kick Player</button>
           }
         </HostCard>
 
         <HostCard inst = {bandMateInsts.length > 2 ? bandMateInsts[2] : -2} name = {(dataConnections.length <=2) ? '' : (bandMateNames.length <= 2) ? '...' : bandMateNames[2]}>
           <br/>
           {dataConnections.length > 2 && 
-            <button onClick={() => sendKick(2)}>Kick Player</button>
+            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(2)}>Kick Player</button>
           }
         </HostCard>
 
         <HostCard inst = {bandMateInsts.length > 3 ? bandMateInsts[3] : -2} name = {(dataConnections.length <=3) ? '' : (bandMateNames.length <= 3) ? '...' : bandMateNames[3]}>
           <br/>
           {dataConnections.length > 3 && 
-            <button onClick={() => sendKick(3)}>Kick Player</button>
+            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(3)}>Kick Player</button>
           }
         </HostCard>
 
         <HostCard inst = {bandMateInsts.length > 4 ? bandMateInsts[4] : -2} name = {(dataConnections.length <=4) ? '' : (bandMateNames.length <= 4) ? '...' : bandMateNames[4]} >
         <br/>
         {dataConnections.length > 4 && 
-            <button onClick={() => sendKick(4)}>Kick Player</button>
+            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(4)}>Kick Player</button>
           }
         </HostCard>
 
         <HostCard inst = {bandMateInsts.length > 5 ? bandMateInsts[5] : -2} name = {(dataConnections.length <=5) ? '' : (bandMateNames.length <= 5) ? '...' : bandMateNames[5]}>
         <br/>
         {dataConnections.length > 5 && 
-            <button onClick={() => sendKick(5)}>Kick Player</button>
+            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(5)}>Kick Player</button>
           }
         </HostCard>
     </div>                         
