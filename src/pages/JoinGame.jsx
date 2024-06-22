@@ -18,10 +18,12 @@ const JoinGame = () => {
     const [waitingRoom, setWaitingRoom] = useState(false);
     const [inst, setInst] = useState(-1);
     const [gameStarted, setGameStarted] = useState(false);
+    const [timeSig, setTimeSig] = useState(0);
     const [bpm, setBpm] = useState('0');
     const [key, setKey] = useState('-1');
     const [chordProgression, setChordProgression] = useState(-1);
     const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
+    const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','4']];
     const [myPrompts, setMyPrompts] = useState([]);
     var playerPrompts = [];
     
@@ -45,6 +47,10 @@ const JoinGame = () => {
                 setConn(null);
                 peer.destroy();
                 break
+              case 'T':
+                let newTimeSig = data.substring(1);
+                setTimeSig(newTimeSig);
+                break;
               case 'B':
                 setGameStarted(true);
                 let newBpm = data.substring(1);
@@ -140,19 +146,34 @@ const JoinGame = () => {
 if (gameStarted){
   return (
     <div className='border border-b-8 border-backgroundblack bg-backgroundblack h-screen'>
-      <div className='flex space-x-16 w-screen bg-buttongold items-center border-8 border-backgroundblack'>
-        <div className='bg-buttongold text-outlinebrown text-4xl font-bold py-2   '>
-          {bpm} bpm <br/>
-          {chordProgressions[chordProgression].name} <br/>
-          in {keys[key]} <br/>
+      <div className='flex space-x-16 bg-buttongold items-center border-8 border-backgroundblack'>
+        <div className='text-outlinebrown text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold py-2  justify-center  w-screen'>
+          <div className='grid grid-cols-2 gap-4 place-content-center'>
+            <div className='mx-auto'>
+              <div className='flex flex-col justify-center text-xl xl:text-3xl mx-auto'>
+                <div className='border-b-2 border-backgroundgray text-center'>{timeSignatures[timeSig][0]}</div>
+                <div className='text-center'>{timeSignatures[timeSig][1]}</div>
+              </div>
+            </div>
+            <div> {bpm} bpm </div>
+            
+            <div className='text-center'>
+              {chordProgressions[chordProgression].name}
+            </div>
+            <div className='flex flex-wrap'>
+              in {keys[key]} <br/>
+            </div>
+          </div>
+          
+          
         </div>
       </div>
-      <div className='flex-col space-x-16 px-4 w-screen bg-backgroundgray text-offwhite text-2xl justify-center border-8 border-backgroundblack'>
+      <div className='flex-col  w-screen bg-backgroundgray text-offwhite text-lg md:text-xl lg:text-2xl text-center border-8 border-backgroundblack'>
         {
           prompts && prompts.map( prompt => {
             if (prompt.id == myPrompts[0]){
               return(
-                <div className= 'justify-center' key = {prompt.id}>
+                <div className= '' key = {prompt.id}>
                   {prompt.prompt}
                 </div>
               )
@@ -163,14 +184,14 @@ if (gameStarted){
           prompts && prompts.map( prompt => {
             if (prompt.id == myPrompts[1]){
               return(
-                <div className= 'justify-center' key = {prompt.id}>
+                <div className= '' key = {prompt.id}>
                   {prompt.prompt}
                 </div>
               )
             }
           })
         } <br/>
-        <div className='flex bg-backgroundblack'>
+        <div className='flex bg-backgroundgray text-backgroundgray'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={false}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={false}/>
@@ -209,8 +230,8 @@ if (gameStarted){
           </div>
           :<>{ isConnected 
             ? <div className='flex h-screen space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
-            <div className='flex flex-wrap space-x-8 items-center m-auto'> 
-            <div className='text-2xl bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'>
+            <div className='flex flex-wrap flex-col xl:flex-row space-x-8 items-center m-auto'> 
+            <div className='text-xl lg:text-2xl bg-buttongold text-center hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'>
             Set a Username:
                 <input type="text" value={userName} onChange={e => setUserName(e.target.value)}  />
             </div>
@@ -219,8 +240,8 @@ if (gameStarted){
               </div> 
               </div>    
             : <div className='flex h-screen space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
-              <div className='flex flex-wrap space-x-8 items-center m-auto'>
-                <div className='text-2xl bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'>
+              <div className='flex flex-wrap flex-col xl:flex-row space-x-8 items-center m-auto'>
+                <div className='text-xl lg:text-2xl bg-buttongold text-center hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'>
                   ENTER A ROOMCODE: <input type="text" value={room} onChange={e => setRoom(e.target.value)} />
                 </div>
                 

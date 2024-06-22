@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import prompts from '../prompts.json';
 import chordProgressions from '../chordProgressions.json';
 import ChordCard from '../components/ChordCard';
+import reroll from '../assets/images/reroll.png';
 
 const HostGame = () => {
   const [peerId, setPeerId] = useState('...');
@@ -13,12 +14,14 @@ const HostGame = () => {
   const [bandMateInsts, setBandMateInsts] = useState([]);
   var waitingForName = false;
   const [gameStarted, setGameStarted] = useState(false);
+  const [timeSig, setTimeSig] = useState(0);
   const [bpm, setBpm] = useState('0');
   const [key, setKey] = useState('-1');
   const [chordProgression, setChordProgression] = useState('-1');
   const instrumentBoundaries = [2,5,8,11,14,17]
   const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
-
+  const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','4']];
+  const timeSignatureProbs = [50, 80, 88, 92, 95, 97, 99, 100];
 
 
 
@@ -215,6 +218,14 @@ const HostGame = () => {
         alert('Players need to select their instruments!');
         return;
       }
+      const newTimeSigRoller = Math.floor(Math.random() * 100) + 1;
+      let newTimeSig = 0;
+      for (let i = 0; i < timeSignatureProbs.length; i++){
+        if (newTimeSigRoller <= timeSignatureProbs[i]){
+          newTimeSig = i;
+        }
+      }
+      setTimeSig(newTimeSig);
       const newBpm = Math.floor(Math.random() * 160) + 40;
       setBpm(newBpm); //set the Bpm to a random number between 40 and 200
       const newKey = Math.floor(Math.random() * 24);
@@ -240,6 +251,7 @@ const HostGame = () => {
       for(let j = 0; j < dataConnections.length; j++){
         console.log('sending prompts to player ' + j + ". Prompts: " + bandMatePromptIds[j*2] + " " + bandMatePromptIds[j*2+1])
         let currentConn = dataConnections[j];
+        currentConn.send('T' + newTimeSig);
         currentConn.send('B' + newBpm);
         currentConn.send('K' + newKey);
         currentConn.send('C' + newChordProgression);
@@ -257,20 +269,135 @@ const HostGame = () => {
       }
     }
     
+    function rerollTimeSig(){
+      console.log('rerolling time signature');
+      const newTimeSigRoller = Math.floor(Math.random() * 100) + 1;
+      console.log(newTimeSigRoller, 'newTimeSigRoller')
+      let newTimeSig = 0;
+      for (let i = 0; i < timeSignatureProbs.length; i++){
+        if (newTimeSigRoller <= timeSignatureProbs[i]){
+          newTimeSig = i;
+          break;
+        }
+      }
+      console.log(newTimeSig, 'newTimeSig')
+      setTimeSig(newTimeSig);
+      for(let j = 0; j < dataConnections.length; j++){
+        let currentConn = dataConnections[j];
+        currentConn.send('T' + newTimeSig);
+      }
+    }
+    function rerollBpm(){
+      console.log('rerolling BPM');
+      const newBpm = Math.floor(Math.random() * 160) + 40;
+      setBpm(newBpm);
+      for(let j = 0; j < dataConnections.length; j++){
+        let currentConn = dataConnections[j];
+        currentConn.send('B' + newBpm);
+      }
+    }
+    function rerollKey(){
+      console.log('rerolling Key');
+      //first check the tonality of the chord progression
+      
+      var newKey = Math.floor(Math.random() * 12)*2;
+
+      newKey += chordProgressions[chordProgression].tonality;
+      setKey(newKey)
+      for(let j = 0; j < dataConnections.length; j++){
+        let currentConn = dataConnections[j];
+        currentConn.send('K' + newKey);
+      }
+    }
+    function rerollChordProgression(){
+      console.log('rerolling chord progression');
+      var newChordProgression;
+      //get a chord progression
+      do{
+        newChordProgression = Math.floor(Math.random() * Object.keys(chordProgressions).length);
+      //make sure the tonality of key and proj match
+      }while(chordProgressions[newChordProgression].tonality != key%2)
+      setChordProgression(newChordProgression);
+      for(let j = 0; j < dataConnections.length; j++){
+        let currentConn = dataConnections[j];
+        currentConn.send('C' + newChordProgression);
+      }
+    }
+    
 
     
 
   if (gameStarted){
     return (
       <div className='bg-backgroundblack h-screen w-screen'>
-        <div className='flex flex-wrap space-x-16 bg-buttongold items-center border-8 border-backgroundblack'>
-        <div className='bg-buttongold text-outlinebrown text-8xl font-bold py-2  '>
-    {bpm} bpm <br/>
-    {chordProgressions[chordProgression].name} <br/>
-    in {keys[key]} <br/>
-    </div>
-    <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => endSession()}> End Jam </button>
-    </div>
+        <div className='flex space-x-16 bg-buttongold items-center border-8 border-backgroundblack'>
+        <div className='text-outlinebrown text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold py-2  justify-center  w-screen'>
+          <div className='grid grid-rows-4 grid-flow-col gap-4 place-content-center'>
+            <div className='mx-auto'>
+              <div className='flex flex-col justify-center text-xl xl:text-3xl mx-auto'>
+                <div className='border-b-2 border-backgroundgray text-center'>{timeSignatures[timeSig][0]}</div>
+                <div className='text-center'>{timeSignatures[timeSig][1]}</div>
+              </div>
+            </div>
+            <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold h-8 w-8 mx-auto border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => rerollTimeSig()}> 
+                <img className='h-4 w-auto mx-auto'
+                  src= {reroll}
+                  alt="Reroll"
+                />
+            </button>
+            {
+              (chordProgressions[chordProgression].name.length < 15)
+              ?<div className='justify-center mx-auto'>
+                  <div className='text-center'>
+                    {chordProgressions[chordProgression].name}
+                  </div>
+                </div>
+              :(chordProgressions[chordProgression].name.length < 25)
+              ?<div className='justify-center mx-auto'>
+                  <div className='text-center text-lg md:text-xl lg:text-2xl xl:text-4xl'>
+                    {chordProgressions[chordProgression].name}
+                  </div>
+                </div>
+              :<div className='justify-center mx-auto'>
+                  <div className='text-center text-sm md:text-base lg:text-xl xl:text-3xl'>
+                    {chordProgressions[chordProgression].name}
+                  </div>
+                </div>
+            }
+            <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold h-8 w-8 mx-auto py-1 px-1 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => rerollChordProgression()}> 
+                <img className='h-4 w-auto mx-auto'
+                  src= {reroll}
+                  alt="Reroll"
+                />
+              </button>
+            <div> 
+              <div> {bpm} bpm</div> 
+
+            </div>
+            <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold h-8 w-8 mx-auto py-1 px-1 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => rerollBpm()}> 
+                <img className='h-4 w-auto mx-auto'
+                  src= {reroll}
+                  alt="Reroll"
+                />
+              </button>
+            <div className=''>
+              <div>{keys[key]} </div>
+            </div>
+            <button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold h-8 w-8 mx-auto py-1 px-1 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => rerollKey()}> 
+                <img className='h-4 w-auto mx-auto'
+                  src= {reroll}
+                  alt="Reroll"
+                />
+              </button>
+            <button className='bg-buttongold grid-rows-subgrid row-span-2 hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => endSession()}> Start </button>
+           
+
+            <button className='bg-buttongold  grid-rows-subgrid row-span-2  hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => endSession()}> Exit Jam </button>
+          </div>
+          
+          
+        </div>
+      </div>
     {
       //This is the volca beats looking chord chart
     }
