@@ -73,13 +73,13 @@
         },
         {
             "id": 12,
-            "prompt": "Play some organ shit",
+            "prompt": "Use an organ sound",
             "dependancies": [],
             "exclusions": [13]
         },
         {
             "id": 13,
-            "prompt": "Make it 80's synth pop-y",
+            "prompt": "80's synth pop",
             "dependancies": [],
             "exclusions": [12]
         },
@@ -136,7 +136,7 @@
             "id": 22,
             "prompt": "Do an impression of a Beatle",
             "dependancies": [],
-            "exclusions": [17,24,25]
+            "exclusions": [17,24,25,33]
         },
         {
             "id": 23,
@@ -166,13 +166,13 @@
             "id": 27,
             "prompt": "Play Reggae",
             "dependancies": [],
-            "exclusions": [0,1]
+            "exclusions": [0,1,34]
         },
         {
             "id": 28,
             "prompt": "Play Folk-y",
             "dependancies": [],
-            "exclusions": [0,1,27]
+            "exclusions": [0,1,27,34]
         },
         {
             "id": 29,
@@ -185,6 +185,128 @@
             "prompt": "Play the relative major or minor on the tonic",
             "dependancies": [],
             "exclusions": []
+        },
+        {
+            "id": 31,
+            "prompt": "Sing staccato",
+            "dependancies": [],
+            "exclusions": [32]
+        },
+        {
+            "id": 32,
+            "prompt": "Sing legato",
+            "dependancies": [],
+            "exclusions": [31]
+        },
+        {
+            "id": 33,
+            "prompt": "Sing with your throat as open as you can manage",
+            "dependancies": [],
+            "exclusions": [22]
+        },
+        {
+            "id": 34,
+            "prompt": "Strum each chord once at the start of the bar and let it ring out",
+            "dependancies": [],
+            "exclusions": [27,28]
+        },
+        {
+            "id": 35,
+            "prompt": "Palm mute",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 36,
+            "prompt": "Throw in a few pinch harmonics",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 37,
+            "prompt": "Try to play a lick others would recognize without them noticing",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 38,
+            "prompt": "Throw in as many Nonharmonic tones as you can",
+            "dependancies": [],
+            "exclusions": [3]
+        },
+        {
+            "id": 39,
+            "prompt": "Play in the dorian mode",
+            "dependancies": [],
+            "exclusions": [3,4,40,41,42,43]
+        },
+        {
+            "id": 40,
+            "prompt": "Play in the Phrygian mode",
+            "dependancies": [],
+            "exclusions": [3,4,39,41,42,43]
+        },
+        {
+            "id": 41,
+            "prompt": "Play in the Lydian mode",
+            "dependancies": [],
+            "exclusions": [3,4,39,40,42,43]
+        },
+        {
+            "id": 42,
+            "prompt": "Play in the Mixolydian mode",
+            "dependancies": [],
+            "exclusions": [3,4,39,40,41,43]
+        },
+        {
+            "id": 43,
+            "prompt": "Play in the Locrian mode",
+            "dependancies": [],
+            "exclusions": [3,4,39,40,41,42]
+        },
+        {
+            "id": 44,
+            "prompt": "Do a mean impression of your favorite guitarist",
+            "dependancies": [],
+            "exclusions": [5,38,39]
+        },
+        {
+            "id": 45,
+            "prompt": "Play a guitar solo you know well that does NOT fit the chords or vibe",
+            "dependancies": [],
+            "exclusions": [3,4,5,39,40,41,42,43]
+        },
+        {
+            "id": 46,
+            "prompt": "Overshoot all of your bends",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 47,
+            "prompt": "Play with a slide",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 48,
+            "prompt": "You can't use a pick",
+            "dependancies": [],
+            "exclusions": []
+        },
+        {
+            "id": 49,
+            "prompt": "Must Djent",
+            "dependancies": [],
+            "exclusions": [3,4,39,40,41,42,43,44,45]
+        },
+        {
+            "id": 50,
+            "prompt": "Play only two strings, where one is a drone note",
+            "dependancies": [],
+            "exclusions": [3,35,44,45]
         }
+        
+        
       
     ]

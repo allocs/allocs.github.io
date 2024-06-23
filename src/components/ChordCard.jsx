@@ -1,4 +1,4 @@
-const ChordCard = ({ keyVal, chordProg, index, isSelected }) => {
+const ChordCard = ({ keyVal, chordProg, index, isSelected, onSelect }) => {
     if(index >= chordProg.length) return <div/>;
     //const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','Db minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
     const keys = [['C','D','E','F','G','A','B'],['G','A','B','C','D','E','F#'],['D','E','#F','G','A','B','C#'],['A','B','C#','D','E','F#','G#'],['E','F#','G#','A','B','C#','D#'],['B','C#','D#','E','F#','G#','A#'],['F#','G#','A#','B','C#','D#','E#'],['Db','Eb','F','Gb','Ab','Bb','C'],['Ab','Bb','C','Db','Eb','F','G'],['Eb','F','G','Ab','Bb','C','D'],['Bb','C','D','Eb','F','G','A'],['F','G','A','Bb','C','D','E']]
@@ -48,8 +48,8 @@ const ChordCard = ({ keyVal, chordProg, index, isSelected }) => {
 
 
     return ( <>{isSelected  
-     ?<button className='bg-chordgold rounded-lg pb-8'>
-        <button className='bg-yellowlight blur-sm text-outlinebrown font-bold h-3 w-3 mx-auto py-1 px-1   rounded-full'> </button>
+     ?<button className='bg-chordgold rounded-lg py-3 pb-4'>
+        <div className='bg-yellowlight blur-sm text-outlinebrown font-bold h-3 w-3 mx-auto    rounded-full'> </div>
         <div className='m-auto font-bold py-2'>
         {myChordName}
 
@@ -58,8 +58,8 @@ const ChordCard = ({ keyVal, chordProg, index, isSelected }) => {
             G#sus4
         </div>
     </button>
-    :<button className='bg-chordgold  rounded-lg pb-8'>
-        <button className='bg-backgroundgray  text-outlinebrown font-bold h-2 w-2 mx-auto py-1 px-1   rounded-full'> </button>
+    :<button onClick={onSelect} className='bg-chordgold  rounded-lg py-4'>
+        <div className='bg-backgroundgray  text-outlinebrown font-bold h-2 w-2 mx-auto py-1 px-1   rounded-full'> </div>
         <div className='m-auto font-bold py-2 '>
         {myChordName}
 
