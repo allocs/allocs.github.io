@@ -247,7 +247,7 @@ if (gameStarted){
             <div> {bpm} bpm </div>
             
             <div className='text-center'>
-              {chordProgressions[chordProgression].name}
+              {chordProgressions[chordProgression]?.name}
             </div>
             <div className='flex flex-wrap'>
               in {keys[key]} <br/>
