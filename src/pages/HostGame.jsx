@@ -31,10 +31,8 @@ const HostGame = () => {
   const timeSignatureProbs = [50, 80, 88, 92, 95, 97, 99, 100];
 
   const timerId = useRef();
-  const currentBar = useRef(0);
   const currentChord = useRef(0);
   const currentCount = useRef(1);
-  const expectedTimerReturn = useRef();
   const [metronomeIsRunning, setMetronomeIsRunning] = useState(false);
   const metronome = new Timer(60000/bpm);
 
@@ -279,73 +277,73 @@ const HostGame = () => {
     
 
 
-      // This is built off of a video by Music and Coding called "How to make an accurate and precise timer in JavaScript"
-      // but heavily changed
-      function Timer(timeInterval){
-        this.timeInterval = timeInterval;
-        this.chordLight = [];
-        while( this.chordLight.length < chordProgressions[chordProgression]?.scaleDegrees.length){
-          this.chordLight.push(false);
-        }
-        //start timer
-        this.start = () => {
-          this.expected = Date.now() + this.timeInterval + 100;
-          timerId.current = setTimeout(this.preround, this.timeInterval + 90);
-          setChordLights(this.chordLight);
-          //let everyone know when this timer starts
-          for(let j = 0; j < dataConnections.length; j++){
-            let currentConn = dataConnections[j];
-            currentConn.send('M' + this.expected);
-          }
-          console.log('Started timer');
-          console.log(timeSignatures[timeSig][1])
-        }
-        //stop timer
-        this.stop = () => {
-          clearTimeout(timerId.current);
-          setMetronomeIsRunning(false);
-          //let everyone know it is stopping
-          for(let j = 0; j < dataConnections.length; j++){
-            let currentConn = dataConnections[j];
-            currentConn.send('S');
-          }
-          clearTimeout(timerId.current)
-          console.log('Stopped timer');
-        }
-        //sets the first callback 10 ms before the second
-        this.preround = () => {
-
-          setChordLights(this.chordLight);
-          clearTimeout(timerId.current);
-          timerId.current = setTimeout(this.round, 10);
-        }
-        //does callback2 and adjusts timeInterval      
-        this.round = () => {
-          let drift = Date.now() - this.expected;
-          setChordLights(
-            chordLights => 
-              [...chordLights.slice(0,currentChord.current),
-                true,
-                ...chordLights.slice(currentChord.current+1)
-              ]
-            );
-          this.expected += timeInterval;
-          console.log(this.timeInterval);
-          console.log(currentChord.current);
-          currentCount.current++;
-          if (currentCount.current > parseInt(timeSignatures[timeSig][0])){
-            currentCount.current = 1;
-            currentChord.current++;
-            if (currentChord.current == this.chordLight.length) currentChord.current = 0;
-          }
-          clearTimeout(timerId.current);
-          timerId.current = setTimeout(this.preround, this.timeInterval - drift - 10);
-        }
+    // This is built off of a video by Music and Coding called "How to make an accurate and precise timer in JavaScript"
+    // but heavily changed
+    function Timer(timeInterval){
+      this.timeInterval = timeInterval;
+      this.chordLight = [];
+      while( this.chordLight.length < chordProgressions[chordProgression]?.scaleDegrees.length){
+        this.chordLight.push(false);
       }
-      useEffect(() => {
-        //const myInterval = setInterval(turnCorrectChordLightOn, 60000/bpm);
-        return () => clearTimeout(timerId.current);
-      }, []);
+      //start timer
+      this.start = () => {
+        this.expected = Date.now() + this.timeInterval + 100;
+        timerId.current = setTimeout(this.preround, this.timeInterval + 90);
+        setChordLights(this.chordLight);
+        //let everyone know when this timer starts
+        for(let j = 0; j < dataConnections.length; j++){
+          let currentConn = dataConnections[j];
+          currentConn.send('M' + this.expected);
+        }
+        console.log('Started timer');
+        console.log(timeSignatures[timeSig][1])
+      }
+      //stop timer
+      this.stop = () => {
+        clearTimeout(timerId.current);
+        setMetronomeIsRunning(false);
+        //let everyone know it is stopping
+        for(let j = 0; j < dataConnections.length; j++){
+          let currentConn = dataConnections[j];
+          currentConn.send('S');
+        }
+        clearTimeout(timerId.current)
+        console.log('Stopped timer');
+      }
+      //sets the first callback 10 ms before the second
+      this.preround = () => {
+
+        setChordLights(this.chordLight);
+        clearTimeout(timerId.current);
+        timerId.current = setTimeout(this.round, 10);
+      }
+      //does callback2 and adjusts timeInterval      
+      this.round = () => {
+        let drift = Date.now() - this.expected;
+        setChordLights(
+          chordLights => 
+            [...chordLights.slice(0,currentChord.current),
+              true,
+              ...chordLights.slice(currentChord.current+1)
+            ]
+          );
+        this.expected += timeInterval;
+        console.log(this.timeInterval);
+        console.log(currentChord.current);
+        currentCount.current++;
+        if (currentCount.current > parseInt(timeSignatures[timeSig][0])){
+          currentCount.current = 1;
+          currentChord.current++;
+          if (currentChord.current == this.chordLight.length) currentChord.current = 0;
+        }
+        clearTimeout(timerId.current);
+        timerId.current = setTimeout(this.preround, this.timeInterval - drift - 10);
+      }
+    }
+    useEffect(() => {
+      //const myInterval = setInterval(turnCorrectChordLightOn, 60000/bpm);
+      return () => clearTimeout(timerId.current);
+    }, []);
 
     function setNewCurrentChord(chordToBeCurrent){
       currentChord.current = chordToBeCurrent;
