@@ -1,4 +1,4 @@
-# JamMate(https://allocs.github.io/)
+# [JamMate](https://allocs.github.io/)
 
 ![logo](https://github.com/allocs/allocs.github.io/blob/main/src/assets/images/JamMateLogoOffwhite.png)
 
@@ -8,10 +8,10 @@ Art and code made by Alex Jans (me). It was my first time doing anything with Re
 
 ## Built With
 
-- React(https://react.dev/)
-- Vite(https://vitejs.dev/)
-- PeerJS(https://peerjs.com/)
-- Tailwindcss(https://tailwindcss.com/)
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [PeerJS](https://peerjs.com/)
+- [Tailwindcss](https://tailwindcss.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -25,6 +25,6 @@ Distributed under GNU General Public License v3.0. See `LICENSE` for more info.
 
 Alex Jans - alex.jans.stu@gmail.com
 
-Project Link: [https://github.com/allocs/allocs.github.io]https://github.com/allocs/allocs.github.io)
+Project Link: [https://github.com/allocs/allocs.github.io](https://github.com/allocs/allocs.github.io)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
