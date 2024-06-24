@@ -305,7 +305,7 @@ const HostGame = () => {
         //let everyone know it is stopping
         for(let j = 0; j < dataConnections.length; j++){
           let currentConn = dataConnections[j];
-          currentConn.send('S');
+          currentConn.send('N');
         }
         clearTimeout(timerId.current)
         console.log('Stopped timer');
@@ -350,7 +350,7 @@ const HostGame = () => {
       //tell everyone we are starting on a different chord
       for(let j = 0; j < dataConnections.length; j++){
         let currentConn = dataConnections[j];
-        currentConn.send('C' + chordToBeCurrent);
+        currentConn.send('S' + chordToBeCurrent);
       }
       let newChordLights = [];
       while(newChordLights.length < chordProgressions[chordProgression]?.scaleDegrees.length){
