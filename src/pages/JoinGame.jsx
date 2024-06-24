@@ -1,5 +1,5 @@
 import React from 'react'
-import {Peer } from 'peerjs';
+import { Peer } from 'peerjs';
 import { useEffect, useState, useRef } from 'react';
 import InstrumentCard from '../components/InstrumentCard';
 import prompts from '../prompts.json';
