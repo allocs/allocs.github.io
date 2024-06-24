@@ -26,11 +26,12 @@ const JoinGame = () => {
     const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
     const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','8']];
     const [myPrompts, setMyPrompts] = useState([]);
+
     const timerId = useRef();
     const currentChord = useRef(0);
     const currentCount = useRef(1);
     const [metronomeIsRunning, setMetronomeIsRunning] = useState(false);
-    const metronome = new Timer(60000/bpm);
+    const metronome = new Timer(60000/parseInt(bpm));
   
 
     var playerPrompts = [];
@@ -80,24 +81,30 @@ const JoinGame = () => {
                 break;
               case 'S':
                 //new starting chord
-                currentChord.current = parseInt(data.substring(1));
-                let newChordLights = [];
-                while(newChordLights.length < chordProgressions[chordProgression]?.scaleDegrees.length){
-                  newChordLights.length ==  parseInt(data.substring(1))?newChordLights.push(true):newChordLights.push(false);
-                }
-                setChordLights(
-                  [...newChordLights]
-                );
+                let newChord = parseInt(data.substring(1));
+                setNewCurrentChord(newChord);
                 break;
               case 'M':
                 //start metronome
-                //the expected is what is passed in
-                let expectedFirstBeat = parseInt(data.substring(1));
-                metronome.start(expectedFirstBeat);
+                if (!metronomeIsRunning){
+                  setMetronomeIsRunning(true);
+                  //the expected is what is passed in
+                  const bpmIndex = data.indexOf("B");
+                  const startIndex = data.indexOf("S");
+                  const numberOfChordsIndex = data.indexOf("N");
+                  const expectedFirstBeat = parseInt(data.substring(1, bpmIndex));
+                  const myBPM = parseInt(data.substring(bpmIndex+1, startIndex));
+                  const myStart = data.substring(startIndex+1, numberOfChordsIndex);
+                  const numberOfChords = parseInt(data.substring(numberOfChordsIndex+1));
+                  console.log('Starting metronome with expected= ' + expectedFirstBeat + ', BPM = ' + myBPM + ', starting beat = ' + myStart + ', and ' + numberOfChords + ' chords');
+                  metronome.start(expectedFirstBeat, myBPM, myStart,numberOfChords);
+                }
+
                 break;
               case 'N':
                 //pause metronome
                 metronome.stop();
+                setMetronomeIsRunning(false);
                 break;
               case 'X':
                 setGameStarted(false);
@@ -161,17 +168,34 @@ const JoinGame = () => {
       console.log('Ping sent!');
     }
 
+    function setNewCurrentChord(chordToBeCurrent){
+      currentChord.current = chordToBeCurrent;
+      //tell everyone we are starting on a different chord
+      let newChordLights = [];
+      while(newChordLights.length < chordProgressions[chordProgression]?.scaleDegrees.length){
+        newChordLights.length == chordToBeCurrent?newChordLights.push(true):newChordLights.push(false);
+      }
+      setChordLights(
+        [...newChordLights]
+      );
+    }
     // This is built off of a video by Music and Coding called "How to make an accurate and precise timer in JavaScript"
     // but heavily changed
-    function Timer(timeInterval){
-      this.timeInterval = timeInterval;
-      this.chordLight = [];
-      while( this.chordLight.length < chordProgressions[chordProgression]?.scaleDegrees.length){
-        this.chordLight.push(false);
-      }
+    function Timer(){
+      //if (bpm != 0) this.timeInterval = 60000/bpm;
+
+
       //start timer
-      this.start = (expectedFirstBeat) => {
-        this.expected = Date.now() + this.timeInterval + 100;
+      this.start = (expectedFirstBeat, myBpm, myStart, numberOfChords) => {
+        this.timeInterval = 60000/myBpm;
+        this.currentChord = myStart;
+        this.numberOfChords = numberOfChords;
+        this.chordLight = [];
+        while( this.chordLight.length < this.numberOfChords){
+          this.chordLight.push(false);
+        }
+        this.currentCount = 1;
+        this.expected = expectedFirstBeat;
         timerId.current = setTimeout(this.preround, this.expected - Date.now() - 10);
         setChordLights(this.chordLight);
         console.log('Started timer');
@@ -186,7 +210,7 @@ const JoinGame = () => {
       }
       //sets the first callback 10 ms before the second
       this.preround = () => {
-
+        console.log(this.timeInterval)
         setChordLights(this.chordLight);
         clearTimeout(timerId.current);
         timerId.current = setTimeout(this.round, 10);
@@ -196,19 +220,19 @@ const JoinGame = () => {
         let drift = Date.now() - this.expected;
         setChordLights(
           chordLights => 
-            [...chordLights.slice(0,currentChord.current),
+            [...chordLights.slice(0,this.currentChord),
               true,
-              ...chordLights.slice(currentChord.current+1)
+              ...chordLights.slice(this.currentChord+1)
             ]
           );
-        this.expected += timeInterval;
+        this.expected += this.timeInterval;
         console.log(this.timeInterval);
-        console.log(currentChord.current);
-        currentCount.current++;
-        if (currentCount.current > parseInt(timeSignatures[timeSig][0])){
-          currentCount.current = 1;
-          currentChord.current++;
-          if (currentChord.current == this.chordLight.length) currentChord.current = 0;
+        console.log(this.currentChord);
+        this.currentCount++;
+        if (this.currentCount > this.numberOfChords){
+          this.currentCount = 1;
+          this.currentChord++;
+          if (this.currentChord == this.chordLight.length) this.currentChord = 0;
         }
         clearTimeout(timerId.current);
         timerId.current = setTimeout(this.preround, this.timeInterval - drift - 10);
@@ -281,22 +305,22 @@ if (gameStarted){
           })
         } <br/>
         <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={(chordLights.length>0)?chordLights[0]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={(chordLights.length>1)?chordLights[1]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={(chordLights.length>2)?chordLights[2]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={(chordLights.length>3)?chordLights[3]:false} onSelect={console.log(0)}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={(chordLights.length>0)?chordLights[0]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={(chordLights.length>1)?chordLights[1]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={(chordLights.length>2)?chordLights[2]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={(chordLights.length>3)?chordLights[3]:false} onSelect={()=>{}}/>
     </div>
     <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={(chordLights.length>4)?chordLights[4]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={(chordLights.length>5)?chordLights[5]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={(chordLights.length>6)?chordLights[6]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={(chordLights.length>7)?chordLights[7]:false} onSelect={console.log(0)}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={(chordLights.length>4)?chordLights[4]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={(chordLights.length>5)?chordLights[5]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={(chordLights.length>6)?chordLights[6]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={(chordLights.length>7)?chordLights[7]:false} onSelect={()=>{}}/>
     </div>
     <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={(chordLights.length>8)?chordLights[8]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={(chordLights.length>9)?chordLights[9]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={(chordLights.length>10)?chordLights[10]:false} onSelect={console.log(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={console.log(0)}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={(chordLights.length>8)?chordLights[8]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={(chordLights.length>9)?chordLights[9]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={(chordLights.length>10)?chordLights[10]:false} onSelect={()=>{}}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={()=>{}}/>
     </div>
       </div>
     </div>

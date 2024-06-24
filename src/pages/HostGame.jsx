@@ -293,7 +293,8 @@ const HostGame = () => {
         //let everyone know when this timer starts
         for(let j = 0; j < dataConnections.length; j++){
           let currentConn = dataConnections[j];
-          currentConn.send('M' + this.expected);
+          console.log()
+          currentConn.send('M' + this.expected + 'B' + bpm + 'S' + currentChord.current + 'N' + chordProgressions[chordProgression]?.scaleDegrees.length);
         }
         console.log('Started timer');
         console.log(timeSignatures[timeSig][1])
@@ -327,7 +328,7 @@ const HostGame = () => {
               ...chordLights.slice(currentChord.current+1)
             ]
           );
-        this.expected += timeInterval;
+        this.expected += this.timeInterval;
         console.log(this.timeInterval);
         console.log(currentChord.current);
         currentCount.current++;
