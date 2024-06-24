@@ -27,11 +27,8 @@ const JoinGame = () => {
     const timeSignatures = [['4','4'],['3','4'],['6','8'], ['12','8'],['2','4'],['7','4'],['5','4'],['11','8']];
     const [myPrompts, setMyPrompts] = useState([]);
 
-    const timerId = useRef();
     const currentChord = useRef(0);
-    const currentCount = useRef(1);
-    const [metronomeIsRunning, setMetronomeIsRunning] = useState(false);
-    const metronome = new Timer(60000/parseInt(bpm));
+
   
 
     var playerPrompts = [];
@@ -81,30 +78,11 @@ const JoinGame = () => {
                 break;
               case 'S':
                 //new starting chord
-                let newChord = parseInt(data.substring(1));
-                setNewCurrentChord(newChord);
-                break;
-              case 'M':
-                //start metronome
-                if (!metronomeIsRunning){
-                  setMetronomeIsRunning(true);
-                  //the expected is what is passed in
-                  const bpmIndex = data.indexOf("B");
-                  const startIndex = data.indexOf("S");
-                  const numberOfChordsIndex = data.indexOf("N");
-                  const expectedFirstBeat = parseInt(data.substring(1, bpmIndex));
-                  const myBPM = parseInt(data.substring(bpmIndex+1, startIndex));
-                  const myStart = data.substring(startIndex+1, numberOfChordsIndex);
-                  const numberOfChords = parseInt(data.substring(numberOfChordsIndex+1));
-                  console.log('Starting metronome with expected= ' + expectedFirstBeat + ', BPM = ' + myBPM + ', starting beat = ' + myStart + ', and ' + numberOfChords + ' chords');
-                  metronome.start(expectedFirstBeat, myBPM, myStart,numberOfChords);
-                }
-
-                break;
-              case 'N':
-                //pause metronome
-                metronome.stop();
-                setMetronomeIsRunning(false);
+                //This also "runs" the metronome
+                const numberOfChordsIndex = data.indexOf('N');
+                const newChord = parseInt(data.substring(1, numberOfChordsIndex));
+                const numberOfChords = parseInt(data.substring(numberOfChordsIndex + 1));
+                setNewCurrentChord(newChord, numberOfChords);
                 break;
               case 'X':
                 setGameStarted(false);
@@ -168,80 +146,17 @@ const JoinGame = () => {
       console.log('Ping sent!');
     }
 
-    function setNewCurrentChord(chordToBeCurrent){
+    function setNewCurrentChord(chordToBeCurrent, numberOfChords){
       currentChord.current = chordToBeCurrent;
       //tell everyone we are starting on a different chord
       let newChordLights = [];
-      while(newChordLights.length < chordProgressions[chordProgression]?.scaleDegrees.length){
+      while(newChordLights.length < numberOfChords){
         newChordLights.length == chordToBeCurrent?newChordLights.push(true):newChordLights.push(false);
       }
       setChordLights(
         [...newChordLights]
       );
     }
-    // This is built off of a video by Music and Coding called "How to make an accurate and precise timer in JavaScript"
-    // but heavily changed
-    function Timer(){
-      //if (bpm != 0) this.timeInterval = 60000/bpm;
-
-
-      //start timer
-      this.start = (expectedFirstBeat, myBpm, myStart, numberOfChords) => {
-        this.timeInterval = 60000/myBpm;
-        this.currentChord = myStart;
-        this.numberOfChords = numberOfChords;
-        this.chordLight = [];
-        while( this.chordLight.length < this.numberOfChords){
-          this.chordLight.push(false);
-        }
-        this.currentCount = 1;
-        this.expected = expectedFirstBeat;
-        timerId.current = setTimeout(this.preround, this.expected - Date.now() - 10);
-        setChordLights(this.chordLight);
-        console.log('Started timer');
-        console.log(timeSignatures[timeSig][1])
-      }
-      //stop timer
-      this.stop = () => {
-        clearTimeout(timerId.current);
-        setMetronomeIsRunning(false);
-        clearTimeout(timerId.current)
-        console.log('Stopped timer');
-      }
-      //sets the first callback 10 ms before the second
-      this.preround = () => {
-        console.log(this.timeInterval)
-        setChordLights(this.chordLight);
-        clearTimeout(timerId.current);
-        timerId.current = setTimeout(this.round, 10);
-      }
-      //does callback2 and adjusts timeInterval      
-      this.round = () => {
-        let drift = Date.now() - this.expected;
-        setChordLights(
-          chordLights => 
-            [...chordLights.slice(0,this.currentChord),
-              true,
-              ...chordLights.slice(this.currentChord+1)
-            ]
-          );
-        this.expected += this.timeInterval;
-        console.log(this.timeInterval);
-        console.log(this.currentChord);
-        this.currentCount++;
-        if (this.currentCount > this.numberOfChords){
-          this.currentCount = 1;
-          this.currentChord++;
-          if (this.currentChord == this.chordLight.length) this.currentChord = 0;
-        }
-        clearTimeout(timerId.current);
-        timerId.current = setTimeout(this.preround, this.timeInterval - drift - 10);
-      }
-    }
-    useEffect(() => {
-      //const myInterval = setInterval(turnCorrectChordLightOn, 60000/bpm);
-      return () => clearTimeout(timerId.current);
-    }, []);
     
     function initializeGame(){
       console.log('Setting up game');

@@ -153,14 +153,6 @@ const HostGame = () => {
       });
     }, [])
 
-    function sendPing(){
-      console.log('Starting game');
-      for(let j = 0; j < dataConnections.length; j++){
-        let conn = dataConnections[j];
-        conn.send('Starting')
-      }
-
-    }
 
     function sendKick(kickeeIndex){
       console.log('Kicking player ' + kickeeIndex);
@@ -294,7 +286,7 @@ const HostGame = () => {
         for(let j = 0; j < dataConnections.length; j++){
           let currentConn = dataConnections[j];
           console.log()
-          currentConn.send('M' + this.expected + 'B' + bpm + 'S' + currentChord.current + 'N' + chordProgressions[chordProgression]?.scaleDegrees.length);
+          currentConn.send('S' + currentChord.current + 'N' + chordLights.length);
         }
         console.log('Started timer');
         console.log(timeSignatures[timeSig][1])
@@ -317,6 +309,13 @@ const HostGame = () => {
         setChordLights(this.chordLight);
         clearTimeout(timerId.current);
         timerId.current = setTimeout(this.round, 10);
+        if (currentCount.current == 1){
+          for(let j = 0; j < dataConnections.length; j++){
+            let currentConn = dataConnections[j];
+            console.log()
+            currentConn.send('S' + currentChord.current + 'N' + chordLights.length);
+          }
+        }
       }
       //does callback2 and adjusts timeInterval      
       this.round = () => {
@@ -327,7 +326,8 @@ const HostGame = () => {
               true,
               ...chordLights.slice(currentChord.current+1)
             ]
-          );
+        );
+
         this.expected += this.timeInterval;
         console.log(this.timeInterval);
         console.log(currentChord.current);
@@ -351,7 +351,7 @@ const HostGame = () => {
       //tell everyone we are starting on a different chord
       for(let j = 0; j < dataConnections.length; j++){
         let currentConn = dataConnections[j];
-        currentConn.send('S' + chordToBeCurrent);
+        currentConn.send('S' + chordToBeCurrent + 'N' + chordLights.length);
       }
       let newChordLights = [];
       while(newChordLights.length < chordProgressions[chordProgression]?.scaleDegrees.length){
