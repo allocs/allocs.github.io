@@ -19,7 +19,23 @@ export default {
       'outlinebrown': '#362711',
       'offwhite':'#EBE8E0',
       'yellowlight':'#fce47a',
-      'chordgold':'#8a7560'
+      'chordgold':'#8a7560',
+      'darksideblack':'#0C0E0D',
+      'prideblue':'#5BCEFA',
+      'channelorange':'#ff7e30',
+      'bratgreen':'#8ace00',
+      'thepodtan':'#E7D7B5',
+      'nevermindthebollocksyellow':'#FFEC2D',
+      'black':'#000000',
+      'igorpink':'#f6aec1',
+      'thesmithspurple':'#7F476A',
+      'goodnewsgreen':'#A1C683',
+      'comedownmachinered':'#C52A2E',
+      'whenthepawnred':'#800301',
+      'blurorange':'#FA9705',
+      'pureguavaorange':'#FF4400',
+      '77red':'#FF242C',
+      'wallsocketblue':'#78A2CC'
     },
     extend: {
       fontFamily: {
