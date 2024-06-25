@@ -27,6 +27,7 @@ import wallsocketLogo from '../assets/images/JamMateLogoWallsocket.png';
 const numberOfThemes = 23;
 
 const theme = Math.floor(Math.random() * (numberOfThemes) );
+
 var logo = null;
 var dynamicClassName = '';
 switch (theme) {
@@ -140,6 +141,7 @@ switch (theme) {
     //theme is Wallsocket by Underscores
     logo = wallsocketLogo;
     dynamicClassName = 'bg-wallsocketblue border-b border-wallsocketblue';
+    break;
   case 22: 
     //theme is the Stroke's comedown machine
     logo = comedownMachineLogo
