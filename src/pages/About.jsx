@@ -1,4 +1,5 @@
 import React from 'react'
+import StudioLogo from '../assets/images/Made by Studio Pydjy.png'
 
 const About = () => {
   return (
@@ -23,8 +24,10 @@ const About = () => {
         Communication Arts, and it seems like a nice way of showing my process and what this project took. Plus I am hoping to get <br/>
         some help from a very old friend which would be nice to show. <br/>
       </div>
+      <br/>
+      <br/>
       <img
-        className='h-24 w-auto'
+        className='h-24 lg:h-32 w-auto m-auto'
         src={StudioLogo}
         alt='Made by Studio Pydjy'
       />
