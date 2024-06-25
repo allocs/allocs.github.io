@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import StudioLogo from '../assets/images/Made by Studio Pydjy.png'
 
 const HomePage = () => {
   return (
@@ -43,6 +44,11 @@ const HomePage = () => {
         </Link>
         </div>
     </div>
+    <img
+        className='h-24 w-auto'
+        src={StudioLogo}
+        alt='Made by Studio Pydjy'
+    />
     </section>
   )
 }

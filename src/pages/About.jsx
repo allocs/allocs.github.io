@@ -23,6 +23,11 @@ const About = () => {
         Communication Arts, and it seems like a nice way of showing my process and what this project took. Plus I am hoping to get <br/>
         some help from a very old friend which would be nice to show. <br/>
       </div>
+      <img
+        className='h-24 w-auto'
+        src={StudioLogo}
+        alt='Made by Studio Pydjy'
+      />
     </div>
   )
 }
