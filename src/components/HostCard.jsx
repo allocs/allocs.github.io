@@ -48,10 +48,10 @@ const HostCard = ({ children, inst, name }) => {
 
     return <div className='flex-col text-3xl font-bold text-offwhite mb-6 align-center bg-backgroundgray  border-8 border-backgroundblack rounded-bl-lg rounded-br-lg'>
         
-        <div className='text-6xl md:text-xl lg:text-4xl font-bold bg-buttongold text-outlinebrown w-full text-center rounded-tl-lg rounded-tr-lg'>  {name}</div>
+        <div className='text-xl lg:text-4xl xl:text-6xl font-bold bg-buttongold text-outlinebrown w-full text-center rounded-tl-lg rounded-tr-lg'>  {name}</div>
         <br/>
 
-        <img className='h-36 md:h-18 lg:h-24 w-auto items-center mx-auto my-auto'
+        <img className='h-20 lg:h-24 xl:h-36 w-auto items-center mx-auto my-auto'
             src={imageOfInstrument}
             alt={instrumentName}
         />

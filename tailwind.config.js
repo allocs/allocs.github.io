@@ -35,7 +35,8 @@ export default {
       'blurorange':'#FA9705',
       'pureguavaorange':'#FF4400',
       '77red':'#FF242C',
-      'wallsocketblue':'#78A2CC'
+      'wallsocketblue':'#78A2CC',
+      'pydjpink':'#BC4F56'
     },
     extend: {
       fontFamily: {

@@ -9,6 +9,7 @@ import reroll from '../assets/images/reroll.png';
 
 const HostGame = () => {
   const [peerId, setPeerId] = useState('...'); // Our host's PeerJS peerId / Room Code. Starts as '...' so that it displays something pre room code calculation
+  const hostIndex = useRef(-1);                               // An int for when the Host wants prompts generated for themselves (also allows single player, to an extent). -1 when the Host isn't playing, their index in the player arrays when they are
   const [dataConnections,setDataConnections] = useState([]); // Our hosts dataConnections. Keeps us attached to other players
   const [bandMateNames, setBandMateNames] = useState([]);   // The set display names of our players
   const [bandMateInsts, setBandMateInsts] = useState([]);  // The selected instruments of our players
@@ -17,6 +18,7 @@ const HostGame = () => {
   const [timeSig, setTimeSig] = useState(0);            // The Time Signature of the Jam Session, decoded by the timeSignatures array
   const [bpm, setBpm] = useState('0');                 // The tempo / BPM of the Jam Session
   const [key, setKey] = useState('-1');               // The key of the Jam Session, decoded by the keys array
+  const playerPrompts = useRef([]);                  // The prompts of the players
   const [chordProgression, setChordProgression] = useState('-1'); // the chord progression of the Jam Session, decoded by the chordProgressions JSON file
   // An array of arrays. 1 array for each instrument, the contents of which are the IDs of that instrument's possible prompts in the prompts JSON file
   const instrumentPromptMapping = [[0,1,2,26,27,28,29,30,34,35],                              // Rhythm Guitar (instrument 0) prompts
@@ -87,8 +89,9 @@ const HostGame = () => {
         // When the connection is established, let the player know which connection they are
         // this is needed for them to send which instrument they want to play
         conn.on('open', function(){
-          conn.send('R' + (myDataConnections.length - 1)); // 'R' signifies a player number in JoinGame
-
+          // 'R' signifies a player number in JoinGame
+          // this ?: also fixes an issue where players overwrite the Host's instruments
+          (hostIndex.current!=-1)?conn.send('R' + myDataConnections.length):conn.send('R' + (myDataConnections.length - 1)); 
         })
 
         // Handles data coming from a player Peer, which should only be a username or and instrument
@@ -142,7 +145,8 @@ const HostGame = () => {
             return dataConnections.filter((value, i) => i !== connIndex)
           });
           for(let i = 0; i < myDataConnections.length; i++){
-            myDataConnections[i].send('R' + i);
+            //this avoids trying to send a null connection, which is used when the host is getting prompts
+            if (myDataConnections[i] != null) myDataConnections[i].send('R' + i);
           }
           setBandMateNames(bandMateNames => {
             return bandMateNames.filter((value, i) => i !== connIndex)
@@ -166,9 +170,64 @@ const HostGame = () => {
     // Kicks the player at the given index
     function sendKick(kickeeIndex){
       console.log('Kicking player ' + kickeeIndex);
-      // Find the data connection for given index
+      // see if the kickee is the host
+      if (dataConnections[kickeeIndex] == null){
+        //just remove their entries in dataConnections, bandMateNames, bandMateInsts, set hostIndex to -1, then returns
+        setDataConnections(dataConnections => {
+          return dataConnections.filter((value, i) => i !== kickeeIndex)
+        });
+        setBandMateNames(bandMateNames => {
+          return bandMateNames.filter((value, i) => i !== kickeeIndex)
+        }
+        );
+        setBandMateInsts(bandMateInsts => {
+          return bandMateInsts.filter((value, i) => i !== kickeeIndex)
+        });
+        hostIndex.current = -1;
+        return;
+      }
+      // If not the host, ind the data connection for given index
       let kickee = dataConnections[kickeeIndex];
       kickee.send('D'); // Tells someone to peer.destroy
+    }
+
+    // Allows the Host to generate prompts for themselves
+    function hostJoinGame(){
+      // So Host can't join twice
+      if (hostIndex.current != -1 ) return;
+      // update hostIndex
+      hostIndex.current = dataConnections.length;
+      // add a null pointer to myDataConnections and dataConnections
+      setDataConnections(
+        dataConnections => [...dataConnections, null]
+      );
+      setBandMateInsts(
+        bandMateInsts => [...bandMateInsts, 0]
+      );
+      setBandMateNames(
+        bandMateNames => [...bandMateNames, 'Host']
+      );
+
+    }
+
+    // Changes the Host's instrument
+    function changeHostInstrument(){
+      if (hostIndex.current == -1) return;
+      (bandMateInsts[hostIndex.current] < 5)
+        ?setBandMateInsts(
+          bandMateInsts => 
+            [...bandMateInsts.slice(0,hostIndex.current),
+              bandMateInsts[hostIndex.current] + 1,
+              ...bandMateInsts.slice(hostIndex.current + 1)
+            ]
+        )
+        :setBandMateInsts(
+          bandMateInsts => 
+            [...bandMateInsts.slice(0,hostIndex.current),
+              0,
+              ...bandMateInsts.slice(hostIndex.current + 1)
+            ]
+        )
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,17 +323,21 @@ const HostGame = () => {
         bandMatePromptIds = addPrompt(bandMatePromptIds, bandMateInsts[i]);
         bandMatePromptIds = addPrompt(bandMatePromptIds, bandMateInsts[i]);
       }
+      playerPrompts.current = bandMatePromptIds;
       console.log(bandMatePromptIds, 'bandMatePromptIds')
       // send out prompts and such
       for(let j = 0; j < dataConnections.length; j++){
         console.log('sending prompts to player ' + j + ". Prompts: " + bandMatePromptIds[j*2] + " " + bandMatePromptIds[j*2+1])
-        let currentConn = dataConnections[j];
-        currentConn.send('T' + newTimeSig); //'T' indicates a time signature for JoinGame
-        currentConn.send('B' + newBpm); //'B' indicates a new BPM for JoinGame
-        currentConn.send('K' + newKey); //'K' indicates a new key for JoinGame
-        currentConn.send('C' + newChordProgression); //'C' indicates a new chord progression for JoinGame
-        currentConn.send('P' + bandMatePromptIds[j*2]); //These lines send each player their prompts, which are calculated here
-        currentConn.send('P' + bandMatePromptIds[j*2+1]); // so that we can handle the cross instrument exclusions
+        // can't send to a null connection, which is used for the Host when they are getting prompts for themselves
+        if (dataConnections[j] != null){
+          let currentConn = dataConnections[j];
+          currentConn.send('T' + newTimeSig); //'T' indicates a time signature for JoinGame
+          currentConn.send('B' + newBpm); //'B' indicates a new BPM for JoinGame
+          currentConn.send('K' + newKey); //'K' indicates a new key for JoinGame
+          currentConn.send('C' + newChordProgression); //'C' indicates a new chord progression for JoinGame
+          currentConn.send('P' + bandMatePromptIds[j*2]); //These lines send each player their prompts, which are calculated here
+          currentConn.send('P' + bandMatePromptIds[j*2+1]); // so that we can handle the cross instrument exclusions
+        }
       }
     }
 
@@ -283,8 +346,11 @@ const HostGame = () => {
       setGameStarted(false);
       // tell everyone to go back to the lobby too
       for(let j = 0; j < dataConnections.length; j++){
-        let currentConn = dataConnections[j];
-        currentConn.send('X');
+        if (dataConnections[j] != null){ // can't send to a null connection, which is used for the Host when they are getting prompts for themselves
+          let currentConn = dataConnections[j];
+          // 'X' indicates the end of a session in JoinGame
+          currentConn.send('X');
+        }
       }
     }
 
@@ -311,9 +377,12 @@ const HostGame = () => {
         setChordLights(this.chordLight);
         // let everyone know when this timer starts
         for(let j = 0; j < dataConnections.length; j++){
-          let currentConn = dataConnections[j];
-          console.log()
-          currentConn.send('M' + this.expected + 'B' + bpm + 'S' + currentChord.current + 'N' + this.chordLight.length + 'O' + timeSignatures[timeSig][0]);
+          // make sure we aren't trying to send to the Host's null dataConnection
+          if (dataConnections[j] != null) {
+            let currentConn = dataConnections[j];
+            console.log()
+            currentConn.send('M' + this.expected + 'B' + bpm + 'S' + currentChord.current + 'N' + this.chordLight.length + 'O' + timeSignatures[timeSig][0]);  
+          }
         }
         // set the Timeout to trigger preround 50 ms before the beat
         timerId.current = setTimeout(this.preround, this.expected - Date.now() - 50);
@@ -324,8 +393,11 @@ const HostGame = () => {
         setMetronomeIsRunning(false);
         // let everyone know it is stopping
         for(let j = 0; j < dataConnections.length; j++){
-          let currentConn = dataConnections[j];
-          currentConn.send('N');
+          // make sure we aren't trying to send to the Host's null dataConnection
+          if (dataConnections[j] != null) {
+            let currentConn = dataConnections[j];
+            currentConn.send('N');
+          }
         }
         // just in case, clear the timer again
         clearTimeout(timerId.current)
@@ -361,9 +433,12 @@ const HostGame = () => {
             currentChord.current = 0;
             // help sync everyone up 
             for(let j = 0; j < dataConnections.length; j++){
-              let currentConn = dataConnections[j];
-              // JoinGame doesn't want to remember the bpm, currentChord, number of chords, or number of beats in a bar, so send all that info
-              currentConn.send('M' + this.expected + 'B' + bpm + 'S' + currentChord.current + 'N' + this.chordLight.length + 'O' + timeSignatures[timeSig][0]);
+              // make sure we aren't trying to send to the Host's null dataConnection
+              if (dataConnections[j] != null){
+                let currentConn = dataConnections[j];
+                // JoinGame doesn't want to remember the bpm, currentChord, number of chords, or number of beats in a bar, so send all that info
+                currentConn.send('M' + this.expected + 'B' + bpm + 'S' + currentChord.current + 'N' + this.chordLight.length + 'O' + timeSignatures[timeSig][0]);
+              }
             }
           }
         }
@@ -385,8 +460,11 @@ const HostGame = () => {
       currentChord.current = chordToBeCurrent;
       // tell everyone we are starting on a different chord
       for(let j = 0; j < dataConnections.length; j++){
-        let currentConn = dataConnections[j];
-        currentConn.send('S' + chordToBeCurrent + 'N' + chordProgressions[chordProgression]?.scaleDegrees.length);
+        // to prevent trying to send to the null pointer when the Host is generating prompts for themselves
+        if (dataConnections[j] != null){
+          let currentConn = dataConnections[j];
+          currentConn.send('S' + chordToBeCurrent + 'N' + chordProgressions[chordProgression]?.scaleDegrees.length);
+        }
       }
       // update the lights to reflect the new chord
       let newChordLights = [];
@@ -426,8 +504,11 @@ const HostGame = () => {
       setTimeSig(newTimeSig); //set it
       // send to everyone
       for(let j = 0; j < dataConnections.length; j++){
-        let currentConn = dataConnections[j];
-        currentConn.send('T' + newTimeSig); // 'T' indicates a new timeSignature
+        // to prevent trying to send to a null pointer when the Host is generating prompts for themselves
+        if (dataConnections[j] != null){
+          let currentConn = dataConnections[j];
+          currentConn.send('T' + newTimeSig); // 'T' indicates a new timeSignature
+        }
       }
       // make sure the beat isn't something out of bounds
       currentCount.current = 1;
@@ -441,8 +522,11 @@ const HostGame = () => {
       setBpm(newBpm); // set it
       // send it
       for(let j = 0; j < dataConnections.length; j++){
-        let currentConn = dataConnections[j];
-        currentConn.send('B' + newBpm); // 'B' indicates a new Bpm
+        // to prevent trying to send to a null pointer when the Host is generating prompts for themselves
+        if (dataConnections[j] != null){
+          let currentConn = dataConnections[j];
+          currentConn.send('B' + newBpm); // 'B' indicates a new Bpm
+        }
       }
     }
 
@@ -457,8 +541,11 @@ const HostGame = () => {
       setKey(newKey) // set it
       // send it
       for(let j = 0; j < dataConnections.length; j++){
-        let currentConn = dataConnections[j];
-        currentConn.send('K' + newKey);
+        // to prevent trying to send to a null pointer when the Host is generating prompts for themselves
+        if (dataConnections[j] != null){
+          let currentConn = dataConnections[j];
+          currentConn.send('K' + newKey);
+        }
       }
     }
 
@@ -475,8 +562,11 @@ const HostGame = () => {
       setChordProgression(newChordProgression);
       //send to everyone
       for(let j = 0; j < dataConnections.length; j++){
-        let currentConn = dataConnections[j];
-        currentConn.send('C' + newChordProgression);
+        // to prevent trying to send to a null pointer when the Host is generating prompts for themselves
+        if (dataConnections[j] != null){
+          let currentConn = dataConnections[j];
+          currentConn.send('C' + newChordProgression);
+        }
       }
       //make sure the current chord isn't out of bounds
       currentChord.current = 0;
@@ -560,37 +650,67 @@ const HostGame = () => {
             <button className='bg-buttongold  grid-rows-subgrid row-span-2  hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => endSession()}> Exit Jam </button>
           </div>
           
-          
         </div>
       </div>
     {
       //This is the volca beats looking chord chart
     }
-    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={(chordLights.length>0)?chordLights[0]:false} onSelect={() => setNewCurrentChord(0)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={(chordLights.length>1)?chordLights[1]:false} onSelect={() => setNewCurrentChord(1)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={(chordLights.length>2)?chordLights[2]:false} onSelect={() => setNewCurrentChord(2)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={(chordLights.length>3)?chordLights[3]:false} onSelect={() => setNewCurrentChord(3)}/>
     </div>
-    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={(chordLights.length>4)?chordLights[4]:false} onSelect={() => setNewCurrentChord(4)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={(chordLights.length>5)?chordLights[5]:false} onSelect={() => setNewCurrentChord(5)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={(chordLights.length>6)?chordLights[6]:false} onSelect={() => setNewCurrentChord(6)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={(chordLights.length>7)?chordLights[7]:false} onSelect={() => setNewCurrentChord(7)}/>
     </div>
-    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-8 border-blackgroundblack'>
+    <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={(chordLights.length>8)?chordLights[8]:false} onSelect={() => setNewCurrentChord(8)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={(chordLights.length>9)?chordLights[9]:false} onSelect={() => setNewCurrentChord(9)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={(chordLights.length>10)?chordLights[10]:false} onSelect={() => setNewCurrentChord(10)}/>
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={() => setNewCurrentChord(11)}/>
     </div>
+    {
+            (hostIndex.current != -1 ) &&
+            <div className='flex-col  w-screen bg-backgroundgray text-offwhite text-lg md:text-xl lg:text-2xl text-center border-8 border-backgroundblack'>
+            {
+              prompts && prompts.map( prompt => {
+                console.log(hostIndex.current, 'hostIndex.current');
+                if (prompt.id == playerPrompts.current[hostIndex.current * 2]){
+                  return(
+                    <div className= '' key = {prompt.id}>
+                      {prompt.prompt}
+                    </div>
+                  )
+                }
+              })
+            } <br/>
+            {
+              prompts && prompts.map( prompt => {
+                console.log(playerPrompts, 'playerPrompts')
+                if (prompt.id == playerPrompts.current[hostIndex.current * 2 + 1]){
+                  return(
+                    <div className= '' key = {prompt.id}>
+                      {prompt.prompt}
+                    </div>
+                  )
+                }
+              })
+            }
+            </div>
+          }
   </div>
   
     )}
     else return (
     <div className='border border-b-8 border-backgroundblack bg-backgroundblack h-screen'>
       <div className='grid grid-cols-3 bg-buttongold items-center justify-center border-8 border-backgroundblack'>
-        <div></div>
+        {(hostIndex.current == -1)
+        ?<button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold  border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => hostJoinGame()}>Join on this device</button>
+        :<button className='bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold  border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => changeHostInstrument()}>Change Host instrument</button>}
         <div className='bg-buttongold text-outlinebrown text-2xl  md:text-4xl lg:text-6xl xl:text-8xl font-bold py-2 justify-self-stretch mx-auto'>
           ROOM ID: 
           <div className='text-3xl md:text-5xl lg:text-8xl'>{peerId}</div>
@@ -603,45 +723,46 @@ const HostGame = () => {
       <div className='grid grid-cols-2 place-items-stretch gap-x-4 bg-backgroundblack border-8 border-backgroundblack h-max'>
         <HostCard 
         inst = {bandMateInsts?.length > 0 ? bandMateInsts[0] : -2} 
-        name = {(dataConnections.length <=0) ? '' : (bandMateNames.length <= 0) ? '...' : bandMateNames[0]}>
+        name = {(dataConnections.length <=0) ? '' : (bandMateNames.length <= 0) ? '...' : bandMateNames[0]}
+        >
           <br/>
           {dataConnections.length > 0 && 
-            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(0)}>Kick Player</button>
+            <button className= 'text-sm xl:text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(0)}>Kick Player</button>
           }
         </HostCard>
 
-        <HostCard inst = {bandMateInsts.length > 1 ? bandMateInsts[1] : -2} name = {(dataConnections.length <=1) ? '' : (bandMateNames.length <= 1) ? '...' : bandMateNames[1]}>
+        <HostCard inst = {bandMateInsts.length > 1 ? bandMateInsts[1] : -2} name = {(dataConnections.length <=1) ? '' : (bandMateNames.length <= 1) ? '...' : bandMateNames[1]} >
           <br/>
           {dataConnections.length > 1 && 
-            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(1)}>Kick Player</button>
+            <button className= 'text-sm xl:text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(1)}>Kick Player</button>
           }
         </HostCard>
 
-        <HostCard inst = {bandMateInsts.length > 2 ? bandMateInsts[2] : -2} name = {(dataConnections.length <=2) ? '' : (bandMateNames.length <= 2) ? '...' : bandMateNames[2]}>
+        <HostCard inst = {bandMateInsts.length > 2 ? bandMateInsts[2] : -2} name = {(dataConnections.length <=2) ? '' : (bandMateNames.length <= 2) ? '...' : bandMateNames[2]} >
           <br/>
           {dataConnections.length > 2 && 
-            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(2)}>Kick Player</button>
+            <button className= 'text-sm xl:text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(2)}>Kick Player</button>
           }
         </HostCard>
 
-        <HostCard inst = {bandMateInsts.length > 3 ? bandMateInsts[3] : -2} name = {(dataConnections.length <=3) ? '' : (bandMateNames.length <= 3) ? '...' : bandMateNames[3]}>
+        <HostCard inst = {bandMateInsts.length > 3 ? bandMateInsts[3] : -2} name = {(dataConnections.length <=3) ? '' : (bandMateNames.length <= 3) ? '...' : bandMateNames[3]} >
           <br/>
           {dataConnections.length > 3 && 
-            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(3)}>Kick Player</button>
+            <button className= 'text-sm xl:text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(3)}>Kick Player</button>
           }
         </HostCard>
 
         <HostCard inst = {bandMateInsts.length > 4 ? bandMateInsts[4] : -2} name = {(dataConnections.length <=4) ? '' : (bandMateNames.length <= 4) ? '...' : bandMateNames[4]} >
         <br/>
         {dataConnections.length > 4 && 
-            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(4)}>Kick Player</button>
+            <button className= 'text-sm xl:text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(4)}>Kick Player</button>
           }
         </HostCard>
 
-        <HostCard inst = {bandMateInsts.length > 5 ? bandMateInsts[5] : -2} name = {(dataConnections.length <=5) ? '' : (bandMateNames.length <= 5) ? '...' : bandMateNames[5]}>
+        <HostCard inst = {bandMateInsts.length > 5 ? bandMateInsts[5] : -2} name = {(dataConnections.length <=5) ? '' : (bandMateNames.length <= 5) ? '...' : bandMateNames[5]} >
         <br/>
         {dataConnections.length > 5 && 
-            <button className= 'text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(5)}>Kick Player</button>
+            <button className= 'text-sm xl:text-lg bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 rounded-full' onClick={() => sendKick(5)}>Kick Player</button>
           }
         </HostCard>
     </div>                         
