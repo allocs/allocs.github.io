@@ -4,7 +4,7 @@
 
 A little party game for musicians to help break the ice musically and get into a jam session.
 
-Art and code made by Alex Jans (me). It was my first time doing anything with React and was my first real personal project, so don't expect everything to run perfectly all the time.
+Art and code made by Alex Jans (me). It was my first time doing anything with React and was my first solo personal project, so don't expect everything to run perfectly all the time.
 
 ## Built With
 
