@@ -39,7 +39,7 @@ export default {
       'pydjpink':'#BC4F56'
     },
     backgroundImage: {
-      'homepage': "url('src/assets/images/backgroundLightGray.png')",
+      'homepage': "url('/images/backgroundLightGray.png')",
     },
     extend: {
       fontFamily: {
