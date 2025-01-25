@@ -18,7 +18,7 @@ const HomePage = () => {
         hello = Hello2;
     }
   return (
-    <div className="h-screen flex items-center flex-col bg-[url('../assets/images/backgroundLightGray.png')] bg-fixed">
+    <div className="h-screen flex items-center flex-col bg-homepage bg-fixed">
         
          <img
                   className='w-[652px] h-auto p-16 .pixelated'

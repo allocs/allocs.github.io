@@ -38,6 +38,9 @@ export default {
       'wallsocketblue':'#78A2CC',
       'pydjpink':'#BC4F56'
     },
+    backgroundImage: {
+      'homepage': "url('../public/assets/images/backgroundLightGray.png')",
+    },
     extend: {
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
