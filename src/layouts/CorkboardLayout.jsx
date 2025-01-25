@@ -62,7 +62,7 @@ const CorkboardLayout = () => {
             </div>
            </div>
         </nav>
-        <div className="h-[calc(100vh-80px)] bg-[url('src/assets/images/backgroundCork.png')]">
+        <div className="h-[calc(100vh-80px)] bg-cork">
             <Outlet />
         </div>
     </>

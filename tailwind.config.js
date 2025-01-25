@@ -40,6 +40,8 @@ export default {
     },
     backgroundImage: {
       'homepage': "url('/src/assets/images/backgroundLightGray.png')",
+      'amp': "url('/src/assets/images/backgroundAmp.png')",
+      'cork': "url('/src/assets/images/backgroundCork.png')",
     },
     extend: {
       fontFamily: {
