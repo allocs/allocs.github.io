@@ -21,88 +21,76 @@ const HomePage = () => {
     <div className="h-screen flex items-center flex-col bg-homepage bg-fixed">
         
          <img
-                  className='w-[652px] h-auto p-16 .pixelated'
+                  className='w-[652px] h-auto px-16 py-6 .pixelated'
                   src={hello}
                   alt='Hello!'
               /> 
-        <div className='font-sans text-[#413702] text-2xl italic font-bold p-8 pb-32'>
+        <div className='font-sans text-[#413702] text-2xl italic font-bold px-8 md:p-8 pb-16 md:pb-32'>
             Welcome to the personal website of Alex Jans
         </div>
 
-        <div className="flex">
+        <div className="flex flex-wrap">
             <NavLink className='flex flex-shrink-0 items-center mr-4' to='/Portfolio'>
             <div className ='group'>
             <div className="group-hover:hidden">
                 <img
-                                className='h-32 w-auto'
+                                className='h-16 md:h-32 w-auto'
                                 src={closedPortfolio}
                                 alt='Closed Portfolio'
                 />
             </div>
             <div className="hidden group-hover:flex">
                 <img
-                                className='h-32 w-auto'
+                                className='h-16 md:h-32 w-auto'
                                 src={openPortfolio}
                                 alt='Opened Portfolio'
                 />
             </div>
             </div>
 
-                          <span className='invisible md:block text-white text-2xl font-bold ml-2'>
-                            Portfolio
-                          </span>
+
             </NavLink>
             <NavLink className='flex flex-shrink-0 items-center mr-4' to='/About'>
             <div className ='group'>
             <div className="group-hover:hidden">
                 <img
-                                className='h-32 w-auto'
+                                className='h-16 md:h-32 w-auto'
                                 src={stickyNote}
                                 alt='Sticky Note that reads "about me"'
                 />
             </div>
             <div className="hidden group-hover:flex">
                 <img
-                                className='h-32 w-auto'
+                                className='h-16 md:h-32 w-auto'
                                 src={upStickyNote}
                                 alt='Sticky Note that reads "About Me" being pulled up'
                 />
             </div>
             </div>
 
-                          <span className='invisible md:block text-white text-2xl font-bold ml-2'>
-                            About Me Stickynote
-                          </span>
             </NavLink>
             <NavLink className='flex flex-shrink-0 items-center mr-4' to='/JamMate'>
             <div className ='group'>
             <div className="group-hover:hidden">
                 <img
-                                className='h-32 w-auto'
+                                className='h-16 md:h-32 w-auto'
                                 src={phone}
                                 alt='Pixelated phone that says "Jam Mate"'
                 />
             </div>
             <div className="hidden group-hover:flex">
                 <img
-                                className='h-32 w-auto'
+                                className='h-16 md:h-32 w-auto'
                                 src={ringingPhone}
                                 alt='Pixelated phone that says "Jam Mate" that is ringing'
                 />
             </div>
             </div>
 
-                          <span className='invisible md:block text-white text-2xl font-bold ml-2'>
-                            About Me Stickynote
-                          </span>
+
             </NavLink>
         </div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+
         <img
                                 className='h-[498px] w-auto p-16'
                                 src={typing}

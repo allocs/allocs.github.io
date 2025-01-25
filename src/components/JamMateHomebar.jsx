@@ -167,25 +167,21 @@ const Homebar = () => {
           <div className='flex flex-1 items-center justify-between md:items-stretch md:justify-start'>
           <NavLink className='flex flex-shrink-0 items-center mr-4' to='/JamMate'>
               <img
-                  className='h-16 w-auto'
+                  className='h-12 md:h-16 w-auto'
                   src={logo}
                   alt='JamMate'
               />
-              <span className='invisible md:block text-white text-2xl font-bold ml-2'>
-                JamMate
-              </span>
+
             </NavLink>
 
           </div>
           <NavLink className='flex flex-shrink-0 items-center justify-self-end mr-4' to='/'>
               <img
-                  className='h-16 w-auto'
+                  className='h-12 md:h-16 w-auto'
                   src={homeIcon}
                   alt='Home'
               />
-              <span className='invisible md:block text-white text-2xl font-bold ml-2'>
-                JamMate
-              </span>
+
             </NavLink>
         </div>
        </div>

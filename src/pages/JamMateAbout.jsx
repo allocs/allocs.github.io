@@ -3,12 +3,11 @@ import StudioLogo from '../assets/images/Studio Pydjy Black with white text.png'
 
 const About = () => {
   return (
-    <div className='font-mono bg-backgroundblack h-[calc(100vh-81px)] w-screen'>
+    <div className='font-mono bg-backgroundblack md:h-[calc(100vh-81px)] w-screen'>
       <div className='bg-buttongold text-outlinebrown text-2xl text-center md:text-4xl lg:text-6xl xl:text-8xl font-bold py-2 justify-self-stretch mx-auto'>
         About JamMate
       </div>
       <div className='text-offwhite text-base m-8'>
-        <br/>
         This is the first game made by Studio Pydjy (Pronounced Studio Pidgey). All of the coding and art has been done by Alex Jans <br/>
         with a lot of advice and suggestion from Bella Angiola and Connor Jans. <br/>
         It is a little party game for musicians to hopefully take some of the anxiety and self-doubt out of jam sessions by gamifying it a little <br/>
@@ -34,8 +33,6 @@ const About = () => {
           <li>Maybe an in-app tuner that notifies bandmates to be quiet</li>
         </ul>
       </div>
-      <br/>
-      <br/>
       <div className='bg-pydjpink'>
       <img
         className='h-24 lg:h-32 w-auto m-auto '
