@@ -13,7 +13,7 @@ export default {
       'disciplinered': '#B9262E',
       'disciplinegray': '#90928F',
       'backgroundgray': '#181915',
-      'backgroundblack': '#13130F',
+      'backgroundblack': '#0c0c0c',
       'buttongold': '#FFEEBB',
       'buttondarkgold': '#D4AA5B',
       'outlinebrown': '#362711',
@@ -44,8 +44,10 @@ export default {
       },
       gridTemplateColumns: {
         '70/30': '70% 28%',
-      }
+      },
+
     },
+
   },
   plugins: [],
 }

@@ -1,56 +1,113 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import StudioLogo from '../assets/images/Made by Studio Pydjy.png'
+import { NavLink } from 'react-router-dom';
+import Hello1 from '../assets/images/Hello1.gif'
+import Hello2 from '../assets/images/Hello2.gif'
+import openPortfolio from '../assets/images/portfolioOpen.png';
+import closedPortfolio from '../assets/images/portfolioClosed.png';
+import stickyNote from '../assets/images/aboutMeStickyNote.png';
+import upStickyNote from '../assets/images/aboutMeStickyNoteUp.png';
+import phone from '../assets/images/JamMatePhone.png';
+import ringingPhone from '../assets/images/JamMatePhoneRing.png'
+import typing from '../assets/images/typing.gif'
 
 const HomePage = () => {
+    let hello = null;
+    if (Math.floor(Math.random() * (2) ) == 0){
+        hello = Hello1;
+    } else {
+        hello = Hello2;
+    }
   return (
-    <div className='h-screen grid grid-col'>
-        <section className='flex flex-wrap  space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
-            <div className='flex flex-col lg:flex-row flex-wrap space-x-8 items-center gap-4  m-auto'>
-            <div className='flex'>
-                <Link
-                    to="/HostGame"
-                    className="text-xl lg:text-2xl bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full rounded-r"
-                    role="button"
-                >
-                    Host a Game
-                </Link>
-            
-                <Link
-                    to='/JoinGame'
-                    className="text-xl lg:text-2xl bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full rounded-l"
-                    role="button"
-                >
-                    Join a Game
-                </Link>
-            </div>
-
-            <div className='flex'>
-            <Link
-                to='/HowTo'
-                className='text-xl lg:text-2xl bg-buttongold hover:bg-buttondarkgold  text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'
-                role="button"
-            >
-                How to Play
-            </Link>
-            </div>
-
-            <div className='flex'>
-            <Link
-                to='/About'
-                className="text-xl lg:text-2xl bg-buttongold hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full"
-                role="button"
-            >
-                About JamMate
-            </Link>
-            </div>
+    <div className="h-screen flex items-center flex-col bg-[url('src/assets/images/backgroundLightGray.png')] bg-fixed">
+        
+         <img
+                  className='w-[652px] h-auto p-16 .pixelated'
+                  src={hello}
+                  alt='Hello!'
+              /> 
+        <div className='font-sans text-[#413702] text-2xl italic font-bold p-8 pb-32'>
+            Welcome to the personal website of Alex Jans
         </div>
-        </section>
+
+        <div className="flex">
+            <NavLink className='flex flex-shrink-0 items-center mr-4' to='/Portfolio'>
+            <div className ='group'>
+            <div className="group-hover:hidden">
+                <img
+                                className='h-32 w-auto'
+                                src={closedPortfolio}
+                                alt='Closed Portfolio'
+                />
+            </div>
+            <div className="hidden group-hover:flex">
+                <img
+                                className='h-32 w-auto'
+                                src={openPortfolio}
+                                alt='Opened Portfolio'
+                />
+            </div>
+            </div>
+
+                          <span className='invisible md:block text-white text-2xl font-bold ml-2'>
+                            Portfolio
+                          </span>
+            </NavLink>
+            <NavLink className='flex flex-shrink-0 items-center mr-4' to='/About'>
+            <div className ='group'>
+            <div className="group-hover:hidden">
+                <img
+                                className='h-32 w-auto'
+                                src={stickyNote}
+                                alt='Sticky Note that reads "about me"'
+                />
+            </div>
+            <div className="hidden group-hover:flex">
+                <img
+                                className='h-32 w-auto'
+                                src={upStickyNote}
+                                alt='Sticky Note that reads "About Me" being pulled up'
+                />
+            </div>
+            </div>
+
+                          <span className='invisible md:block text-white text-2xl font-bold ml-2'>
+                            About Me Stickynote
+                          </span>
+            </NavLink>
+            <NavLink className='flex flex-shrink-0 items-center mr-4' to='/JamMate'>
+            <div className ='group'>
+            <div className="group-hover:hidden">
+                <img
+                                className='h-32 w-auto'
+                                src={phone}
+                                alt='Pixelated phone that says "Jam Mate"'
+                />
+            </div>
+            <div className="hidden group-hover:flex">
+                <img
+                                className='h-32 w-auto'
+                                src={ringingPhone}
+                                alt='Pixelated phone that says "Jam Mate" that is ringing'
+                />
+            </div>
+            </div>
+
+                          <span className='invisible md:block text-white text-2xl font-bold ml-2'>
+                            About Me Stickynote
+                          </span>
+            </NavLink>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <img
-            className='h-24 lg:h-32 w-auto m-auto'
-            src={StudioLogo}
-            alt='Made by Studio Pydjy'
-        />
+                                className='h-[498px] w-auto p-16'
+                                src={typing}
+                                alt='An animated text/video chat with allocs'
+                />
     </div>
   )
 }

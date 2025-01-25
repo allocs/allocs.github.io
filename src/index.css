@@ -3,3 +3,9 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
+@layer components {
+    .pixel{
+        image-rendering: pixelated;
+    }
+  }
