@@ -314,7 +314,7 @@ const JoinGame = () => {
 
 if (gameStarted){
   return (
-    <div className='border border-b-8 border-backgroundblack bg-backgroundblack h-[calc(100vh-81px)]'>
+    <div className='font-mono border border-b-8 border-backgroundblack bg-backgroundblack h-[calc(100vh-81px)]'>
       <div className='flex space-x-16 bg-buttongold items-center border-8 border-backgroundblack'>
         <div className='text-outlinebrown text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold py-2  justify-center  w-screen'>
           <div className='grid grid-cols-2 gap-4 place-content-center'>
@@ -339,30 +339,37 @@ if (gameStarted){
       </div>
       <div className='flex-col  w-screen bg-backgroundgray text-offwhite text-lg md:text-xl lg:text-2xl text-center border-8 border-backgroundblack'>
         <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={(chordLights.length>0)?chordLights[0]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={(chordLights.length>1)?chordLights[1]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={(chordLights.length>2)?chordLights[2]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={(chordLights.length>3)?chordLights[3]:false} onSelect={()=>{}}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={(chordLights.length>0)?chordLights[0]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={(chordLights.length>1)?chordLights[1]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={(chordLights.length>2)?chordLights[2]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={(chordLights.length>3)?chordLights[3]:false} onSelect={()=>{}} promptsAr={prompts}/>
         </div>
         <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={(chordLights.length>4)?chordLights[4]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={(chordLights.length>5)?chordLights[5]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={(chordLights.length>6)?chordLights[6]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={(chordLights.length>7)?chordLights[7]:false} onSelect={()=>{}}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={(chordLights.length>4)?chordLights[4]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={(chordLights.length>5)?chordLights[5]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={(chordLights.length>6)?chordLights[6]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={(chordLights.length>7)?chordLights[7]:false} onSelect={()=>{}} promptsAr={prompts}/>
         </div>
         <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={(chordLights.length>8)?chordLights[8]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={(chordLights.length>9)?chordLights[9]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={(chordLights.length>10)?chordLights[10]:false} onSelect={()=>{}}/>
-          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={()=>{}}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={(chordLights.length>8)?chordLights[8]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={(chordLights.length>9)?chordLights[9]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={(chordLights.length>10)?chordLights[10]:false} onSelect={()=>{}} promptsAr={prompts}/>
+          <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={()=>{}} promptsAr={prompts}/>
         </div>
         {
           prompts && prompts.map( prompt => {
             if (prompt.id == myPrompts[myPrompts.length-2]){
               return(
-                <div className= '' key = {prompt.id}>
-                  {prompt.prompt}
-                </div>
+<>
+                    <details >
+                      <summary>
+                        <div className= 'font-bold' key = {prompt.id}>
+                          {prompt.prompt}
+                        </div>
+                      </summary>
+                      <div className='text-sm md:text-lg'>{prompt.hint}</div>
+                    </details>
+                  </>
               )
             }
           })
@@ -371,9 +378,16 @@ if (gameStarted){
           prompts && prompts.map( prompt => {
             if (prompt.id == myPrompts[myPrompts.length-1]){
               return(
-                <div className= '' key = {prompt.id}>
-                  {prompt.prompt}
-                </div>
+                <>
+                    <details >
+                      <summary>
+                        <div className= 'font-bold' key = {prompt.id}>
+                          {prompt.prompt}
+                        </div>
+                      </summary>
+                      <div className='text-sm md:text-lg'>{prompt.hint}</div>
+                    </details>
+                  </>
               )
             }
           })
@@ -383,10 +397,10 @@ if (gameStarted){
     </div>
   )}
   else return (
-    <div className='h-[calc(100vh-81px)] bg-backgroundblack'>
+    <div className='font-mono h-[calc(100vh-81px)] bg-backgroundblack'>
         <hr />
         <>{ inLobby
-          ? <div className='grid grid-cols-2 place-items-center bg-backgroundblack border-8 border-backgroundblack h-[calc(100vh-81px)]'>
+          ? <div className='font-mono grid grid-cols-2 place-items-center bg-backgroundblack border-8 border-backgroundblack h-[calc(100vh-81px)]'>
             {/* I am putting comments here bc this is gonna be hard to track. I (without really checking what Tailwind and bootstrap were) 
             straight up uninstalled tailwind and installed bootstrap to try and get a nice radio button thing, but it didnt work, so i then
             uninstalled bootstrap and reinstalled tailwind and i am just gonna do it manually in a way that makes sense. */}
@@ -399,7 +413,7 @@ if (gameStarted){
 
           </div>
           :<>{ isConnected 
-            ? <div className='flex h-[calc(100vh-81px)] space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
+            ? <div className='font-mono flex h-[calc(100vh-81px)] space-x-8 items-center bg-backgroundgray border-8 border-backgroundblack py-4'>
             <div className='flex flex-wrap flex-col xl:flex-row space-x-8 items-center m-auto'> 
             <div className='text-xl lg:text-2xl bg-buttongold text-center hover:bg-buttondarkgold text-outlinebrown font-bold py-2 px-4 border-2 border-outlinebrown border-b-8 hover:border-b-4 rounded-full'>
             Set a Username:

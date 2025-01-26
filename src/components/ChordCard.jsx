@@ -1,9 +1,34 @@
-const ChordCard = ({ keyVal, chordProg, index, isSelected, onSelect }) => {
+const ChordCard = ({ keyVal, chordProg, index, isSelected, onSelect, promptsAr }) => {
     if(index >= chordProg.length) return <div/>;
     //const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','Db minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
     const keys = [['C','D','E','F','G','A','B'],['G','A','B','C','D','E','F#'],['D','E','#F','G','A','B','C#'],['A','B','C#','D','E','F#','G#'],['E','F#','G#','A','B','C#','D#'],['B','C#','D#','E','F#','G#','A#'],['F#','G#','A#','B','C#','D#','E#'],['Db','Eb','F','Gb','Ab','Bb','C'],['Ab','Bb','C','Db','Eb','F','G'],['Eb','F','G','Ab','Bb','C','D'],['Bb','C','D','Eb','F','G','A'],['F','G','A','Bb','C','D','E']]
+    const chordModifyingPrompts = [30];
     const myKey = keys[Math.floor(keyVal/2)];
-    const chord = chordProg[index];
+    let chord = chordProg[index];
+    //check this chord for being modified by the prompt
+    let modifyingPrompt = -1;
+    console.log(promptsAr);
+    //first check for the prompts
+    for (let i = 0; i < promptsAr.length; i++){
+        for (let j = 0; j < chordModifyingPrompts.length; j++){
+            if (promptsAr[i].id == chordModifyingPrompts[j]){
+                console.log('found one!')
+                modifyingPrompt = chordModifyingPrompts[j];
+            }
+        }
+    }
+    //check if this chord is modified by said prompt
+    switch (modifyingPrompt){
+        // This switches I -> iv and i->III
+        case 30:
+            if (chord == 1) {
+                chord = -6
+            }else{
+                if (chord == -1)
+                    chord = 3
+            }
+            break;
+    }
     let offSet = 0;
     if (keyVal % 2 == 1) offSet = 5;
     //the %10 is because chords that arent just triads are stored as such:

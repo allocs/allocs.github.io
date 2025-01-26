@@ -21,11 +21,11 @@ const HostGame = () => {
   const playerPrompts = useRef([]);                  // The prompts of the players
   const [chordProgression, setChordProgression] = useState('-1'); // the chord progression of the Jam Session, decoded by the chordProgressions JSON file
   // An array of arrays. 1 array for each instrument, the contents of which are the IDs of that instrument's possible prompts in the prompts JSON file
-  const instrumentPromptMapping = [[0,1,2,26,27,28,29,30,34,35],                              // Rhythm Guitar (instrument 0) prompts
+  const instrumentPromptMapping = [[0,1,2,26,27,28,29,30,34,35,71],                           // Rhythm Guitar (instrument 0) prompts
                                    [3,4,5,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],   // Lead Guitar (instrument 1) prompts
-                                   [6,7,8],                                                   // Bass Guitar (instrument 2) prompts
-                                   [9,10,11],                                                 // Drum (instrument 3) prompts
-                                   [12,13,14],                                                // Keyboard (instrument 4) prompts
+                                   [6,7,8,51,52,53,54,55,56,57,70],                           // Bass Guitar (instrument 2) prompts
+                                   [9,10,11,58,59,60,61,62,63,64,65],                         // Drum (instrument 3) prompts
+                                   [12,13,14,66,67,68,69,71,30],                              // Keyboard (instrument 4) prompts
                                    [15,16,17,18,19,20,21,22,23,24,25,31,32]];                 // Vocal (instrument 5) prompts
   // An array of the possible keys, organized going from Major to relative minor, then up the circle of fifths from the relative major
   const keys = ['C major','A minor','G major','E minor','D major','B minor','A major','F# minor','E major','C# minor','B major','Ab minor','F# major','Eb minor','Db major','Bb minor','Ab major','F minor','Eb major','C minor','Bb major','G minor','F major','D minor'];
@@ -656,22 +656,22 @@ const HostGame = () => {
       //This is the volca beats looking chord chart
     }
     <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={(chordLights.length>0)?chordLights[0]:false} onSelect={() => setNewCurrentChord(0)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={(chordLights.length>1)?chordLights[1]:false} onSelect={() => setNewCurrentChord(1)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={(chordLights.length>2)?chordLights[2]:false} onSelect={() => setNewCurrentChord(2)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={(chordLights.length>3)?chordLights[3]:false} onSelect={() => setNewCurrentChord(3)}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={0} isSelected={(chordLights.length>0)?chordLights[0]:false} onSelect={() => setNewCurrentChord(0)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={1} isSelected={(chordLights.length>1)?chordLights[1]:false} onSelect={() => setNewCurrentChord(1)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={2} isSelected={(chordLights.length>2)?chordLights[2]:false} onSelect={() => setNewCurrentChord(2)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={3} isSelected={(chordLights.length>3)?chordLights[3]:false} onSelect={() => setNewCurrentChord(3)} promptsAr={prompts}/>
     </div>
     <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={(chordLights.length>4)?chordLights[4]:false} onSelect={() => setNewCurrentChord(4)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={(chordLights.length>5)?chordLights[5]:false} onSelect={() => setNewCurrentChord(5)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={(chordLights.length>6)?chordLights[6]:false} onSelect={() => setNewCurrentChord(6)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={(chordLights.length>7)?chordLights[7]:false} onSelect={() => setNewCurrentChord(7)}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={4} isSelected={(chordLights.length>4)?chordLights[4]:false} onSelect={() => setNewCurrentChord(4)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={5} isSelected={(chordLights.length>5)?chordLights[5]:false} onSelect={() => setNewCurrentChord(5)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={6} isSelected={(chordLights.length>6)?chordLights[6]:false} onSelect={() => setNewCurrentChord(6)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={7} isSelected={(chordLights.length>7)?chordLights[7]:false} onSelect={() => setNewCurrentChord(7)} promptsAr={prompts}/>
     </div>
     <div className='flex bg-backgroundgray w-screen border-backgroundblack items-center justify-center gap-4 border-4 border-blackgroundblack'>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={(chordLights.length>8)?chordLights[8]:false} onSelect={() => setNewCurrentChord(8)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={(chordLights.length>9)?chordLights[9]:false} onSelect={() => setNewCurrentChord(9)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={(chordLights.length>10)?chordLights[10]:false} onSelect={() => setNewCurrentChord(10)}/>
-      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={() => setNewCurrentChord(11)}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={8} isSelected={(chordLights.length>8)?chordLights[8]:false} onSelect={() => setNewCurrentChord(8)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={9} isSelected={(chordLights.length>9)?chordLights[9]:false} onSelect={() => setNewCurrentChord(9)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={10} isSelected={(chordLights.length>10)?chordLights[10]:false} onSelect={() => setNewCurrentChord(10)} promptsAr={prompts}/>
+      <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={() => setNewCurrentChord(11)} promptsAr={prompts}/>
     </div>
     {
             (hostIndex.current != -1 ) &&
@@ -681,9 +681,16 @@ const HostGame = () => {
                 console.log(hostIndex.current, 'hostIndex.current');
                 if (prompt.id == playerPrompts.current[hostIndex.current * 2]){
                   return(
-                    <div className= '' key = {prompt.id}>
-                      {prompt.prompt}
-                    </div>
+                    <>
+                    <details >
+                      <summary>
+                        <div className= 'font-bold' key = {prompt.id}>
+                          {prompt.prompt}
+                        </div>
+                      </summary>
+                      <div className='text-sm md:text-lg'>{prompt.hint}</div>
+                    </details>
+                  </>
                   )
                 }
               })
@@ -693,9 +700,16 @@ const HostGame = () => {
                 console.log(playerPrompts, 'playerPrompts')
                 if (prompt.id == playerPrompts.current[hostIndex.current * 2 + 1]){
                   return(
-                    <div className= '' key = {prompt.id}>
-                      {prompt.prompt}
-                    </div>
+                    <>
+                    <details >
+                      <summary>
+                        <div className= 'font-bold' key = {prompt.id}>
+                          {prompt.prompt}
+                        </div>
+                      </summary>
+                      <div className='text-sm md:text-lg'>{prompt.hint}</div>
+                    </details>
+                  </>
                   )
                 }
               })
