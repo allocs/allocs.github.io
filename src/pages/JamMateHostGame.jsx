@@ -680,6 +680,9 @@ const HostGame = () => {
               prompts && prompts.map( prompt => {
                 console.log(hostIndex.current, 'hostIndex.current');
                 if (prompt.id == playerPrompts.current[hostIndex.current * 2]){
+                  //first handle the hint
+                  let myhint = prompt.hint;
+                  
                   return(
                     <>
                     <details >
@@ -688,7 +691,9 @@ const HostGame = () => {
                           {prompt.prompt}
                         </div>
                       </summary>
-                      <div className='text-sm md:text-lg'>{prompt.hint}</div>
+                      <div className='text-sm md:text-lg'>{
+                      myhint
+                      }</div>
                     </details>
                   </>
                   )

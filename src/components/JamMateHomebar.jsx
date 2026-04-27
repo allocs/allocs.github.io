@@ -17,7 +17,6 @@ import goodNewsLogo from '../assets/images/JamMateLogoGoodNews.png';
 import igorLogo from '../assets/images/JamMateLogoIgor.png';
 import isThisItLogo from '../assets/images/JamMateLogoIsThisIt.png';
 import neverMindTheBollocksLogo from '../assets/images/JamMateLogoNeverMindTheBollocks.png';
-import prideLogo from '../assets/images/JamMateLogoPride.png';
 import pureGuavaLogo from '../assets/images/JamMateLogoPureGuava.png';
 import purpleRainLogo from '../assets/images/JamMateLogoPurpleRain.png';
 import thePodLogo from '../assets/images/JamMateLogoThePod.png';
@@ -109,9 +108,8 @@ switch (theme) {
     dynamicClassName = 'bg-nevermindthebollocksyellow border-b border-nevermindthebollocksyellow';
     break;
   case 15:
-    //theme is trans pride :)
-    logo = prideLogo;
-    dynamicClassName = 'bg-prideblue border-b border-prideblue';
+    logo = whiteLogo;
+    dynamicClassName = 'bg-white border-b border-gray400';
     break;
   case 16:
     //theme is Pure Guava by Ween

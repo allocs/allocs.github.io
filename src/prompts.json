@@ -244,31 +244,31 @@
             "id": 39,
             "prompt": "Play in the dorian mode.",
             "exclusions": [3,4,40,41,42,43],
-            "hint": "_{(Math.floor(key/2)*7+9)%12}\re-|-|O|-|O|O|\rB-|-|O|-|O|O|\rG-|O|O|-|O|-|\rD-|O|O|-|O|-|\rA-|-|O|-|O|-|\rE-|-|O|-|O|O|"
+            "hint": "_${(Math.floor(key/2)*7+9)%12}<br/>e-|-|O|-|O|O|<br/>B-|-|O|-|O|O|<br/>G-|O|O|-|O|-|<br/>D-|O|O|-|O|-|<br/>A-|-|O|-|O|-|<br/>E-|-|O|-|O|O|"
         },
         {
             "id": 40,
             "prompt": "Play in the Phrygian mode.",
             "exclusions": [3,4,39,41,42,43],
-            "hint": "_{(Math.floor(key/2)*7)%12}\re-|O|O|-|O|\rB-|O|O|-|O|\rG-|O|-|O|-|\rD-|O|-|O|O|\rA-|O|-|O|O|\rE-|O|O|-|O|"
+            "hint": "_${(Math.floor(key/2)*7)%12}\re-|O|O|-|O|\rB-|O|O|-|O|\rG-|O|-|O|-|\rD-|O|-|O|O|\rA-|O|-|O|O|\rE-|O|O|-|O|"
         },
         {
             "id": 41,
             "prompt": "Play in the Lydian mode.",
             "exclusions": [3,4,39,40,42,43],
-            "hint": "_{(Math.floor(key/2)*7)%12}\re-|O|O|-|-|\rB-|O|O|-|O|\rG-|O|-|O|-|\rD-|O|-|O|O|\rA-|O|-|O|O|\rE-|-|O|-|O|"
+            "hint": "_${(Math.floor(key/2)*7)%12}\re-|O|O|-|-|\rB-|O|O|-|O|\rG-|O|-|O|-|\rD-|O|-|O|O|\rA-|O|-|O|O|\rE-|-|O|-|O|"
         },
         {
             "id": 42,
             "prompt": "Play in the Mixolydian mode.",
             "exclusions": [3,4,39,40,41,43],
-            "hint": "_{(Math.floor(key/2)*7+2)%12}\re-|-|O|-|O|-|\rB-|-|O|-|O|O|\rG-|O|-|O|O|-|\rD-|O|O|-|O|-|\rA-|O|O|-|O|-|\rE-|-|O|-|O|-|"
+            "hint": "_${(Math.floor(key/2)*7+2)%12}\re-|-|O|-|O|-|\rB-|-|O|-|O|O|\rG-|O|-|O|O|-|\rD-|O|O|-|O|-|\rA-|O|O|-|O|-|\rE-|-|O|-|O|-|"
         },
         {
             "id": 43,
             "prompt": "Play in the Locrian mode.",
             "exclusions": [3,4,39,40,41,42],
-            "hint": "_{(Math.floor(key/2)*7+7)%12}\re-|O|O|-|O|\rB-|-|O|-|O|\rG-|O|-|O|O|\rD-|O|-|O|O|\rA-|O|O|-|O|\rE-|O|O|-|O|"
+            "hint": "_${(Math.floor(key/2)*7+7)%12}\re-|O|O|-|O|\rB-|-|O|-|O|\rG-|O|-|O|O|\rD-|O|-|O|O|\rA-|O|O|-|O|\rE-|O|O|-|O|"
         },
         {
             "id": 44,
