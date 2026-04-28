@@ -23,7 +23,7 @@ Distributed under GNU General Public License v3.0. See `LICENSE` for more info.
 
 ## Contact
 
-Alex Jans - alex.jans.stu@gmail.com
+Alex Jans - alexandracjans@gmail.com
 
 Project Link: [https://github.com/allocs/allocs.github.io](https://github.com/allocs/allocs.github.io)
 
