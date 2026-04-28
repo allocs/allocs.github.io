@@ -7,13 +7,14 @@ const Nowhere = () => {
         <div className='p-4 md:p-8' >
             <div className='font-serif bg-[#f8f7ed] p-4 md:p-8'>
                 <div className='text-2xl'>
-                    Hello! I'm Alex, or Alexandra, or Al.
+                    Hello! I'm Alex!
                 </div>
                 <br/>
                 <div className='text-lg'>
-                    I am a artist / computer scientist / person living in Madison WI with my fiancee, Bella, and our two pet doves, Pydjy and Paloma. <br/><br/>
-                    I made this website to share the things I make, either coding projects, videos, drawings, paintings, whatever, and to express myself! <br/><br/>
-                    Especially with social media becoming even weirder, its nice to have a corner of the internet for my stuff. I hope you enjoy!<br/><br/>
+                    I am what happens if you take an art-person and teach them how to code. <br/><br/>
+                    I made this website to share the things I make, either coding projects, videos, drawings, paintings, whatever. <br/><br/>
+                    It is also a portfolio, where I can show things I made money making. <br/><br/>
+                    Yes, it is supposed to be a bit weird looking. I guess I am going for some sort of nostagic simulacrum vibe, but I don't want to write an artist's statement for a website.<br/><br/>
                 </div>
             </div>
         </div>
@@ -28,7 +29,6 @@ const Nowhere = () => {
                 <br/>
                 <div className='text-lg'>
                     If you want to get in touch, the best way is probably e-mail at alexandracjans@gmail.com. <br/><br/>
-                    I also have a phone number (224)-501-5649 <br/><br/>
                     Don't send me any pigeon mail. I will be keeping the pigeons. <br/><br/><br/><br/>
                 </div>
             </div>
@@ -38,7 +38,7 @@ const Nowhere = () => {
                 <img
                     className='h-[475px] md:h-[720px] w-auto p-16'
                     src={resume}
-                    alt='A sheet of Valentines Day cards featuring my dove, Pidgey. They read "I Dove You", "You Are So Coo!", and "You Make My Heart Soar".'
+                    alt="My resume is here. It isn't particularly impressive"
                 />
 
             </NavLink>

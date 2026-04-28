@@ -674,6 +674,7 @@ const HostGame = () => {
       <ChordCard keyVal={key} chordProg={chordProgressions[chordProgression].scaleDegrees} index={11} isSelected={(chordLights.length>11)?chordLights[11]:false} onSelect={() => setNewCurrentChord(11)} promptsAr={prompts}/>
     </div>
     {
+            // Handles the host's prompts and stuff if they are playing
             (hostIndex.current != -1 ) &&
             <div className='flex-col  w-screen bg-backgroundgray text-offwhite text-lg md:text-xl lg:text-2xl text-center border-8 border-backgroundblack'>
             {
