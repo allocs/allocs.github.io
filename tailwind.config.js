@@ -46,6 +46,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
+        system: ['Bitcount Grid Double', 'system-ui']
       },
       gridTemplateColumns: {
         '70/30': '70% 28%',

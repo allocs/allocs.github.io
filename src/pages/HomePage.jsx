@@ -18,6 +18,85 @@ const HomePage = () => {
         hello = Hello2;
     }
   return (
+    <div className="flex min-height:100% bg-homepage bg-fixed justify-center">
+        <div className="grid grid-cols-3 gap-2 justify-evenly w-1/3 bg-homepage bg-fixed">
+            <div className="col-span-3">
+
+            </div>
+            <div className="col-span-2">
+                <img
+                    className='w-full pixel'
+                  src={hello}
+                  alt='Hello!'
+                /> 
+            </div>
+            <div className='text-right font-system text-[#413702] text-lg  md:text-2xl lg:text-4xl p-4'>
+                Welcome to the personal website of Alex Jans
+            </div>
+            <NavLink className='' to='/Portfolio'>
+                <div className ='group'>
+                    <div className="group-hover:hidden">
+                        <img
+                            className='w-full pixel'
+                            src={closedPortfolio}
+                            alt='Closed Portfolio'
+                        />
+                    </div>
+                    <div className="hidden group-hover:flex">
+                        <img
+                            className='w-full pixel'
+                            src={openPortfolio}
+                            alt='Opened Portfolio'
+                        />
+                    </div>
+                </div>
+            </NavLink>
+            <NavLink className='' to='/About'>
+                <div className ='group'>
+                    <div className="group-hover:hidden">
+                        <img
+                            className='w-full pixel'
+                            src={stickyNote}
+                            alt='Sticky Note that reads "about me"'
+                        />
+                    </div>
+                    <div className="hidden group-hover:flex">
+                        <img
+                            className='w-full pixel'
+                            src={upStickyNote}
+                            alt='Sticky Note that reads "About Me" being pulled up'
+                        />
+                    </div>
+                </div>
+            </NavLink>
+            <NavLink className='' to='/JamMate'>
+                <div className ='group'>
+                    <div className="group-hover:hidden">
+                        <img
+                            className='w-full pixel'
+                            src={phone}
+                            alt='Pixelated phone that says "Jam Mate"'
+                        />
+                    </div>
+                    <div className="hidden group-hover:flex">
+                        <img
+                            className='w-full pixel'
+                            src={ringingPhone}
+                            alt='Pixelated phone that says "Jam Mate" that is ringing'
+                        />
+                    </div>
+                </div>
+            </NavLink>
+            <div className='col-span-3 bg-homepage bg-fixed'>
+                <img
+                    className='w-full pixel'
+                    src={typing}
+                    alt='An animated gif of Alex'
+                />
+            </div>
+        </div>
+    </div>
+  );
     <div className="h-screen flex items-center flex-col bg-homepage bg-fixed">
         
          <img
@@ -97,7 +176,7 @@ const HomePage = () => {
                                 alt='An animated text/video chat with allocs'
                 />
     </div>
-  )
+  
 }
 
 export default HomePage
