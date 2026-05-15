@@ -18,8 +18,8 @@ const HomePage = () => {
         hello = Hello2;
     }
   return (
-    <div className="flex min-height:100% bg-homepage bg-fixed justify-center">
-        <div className="grid grid-cols-3 gap-2 justify-evenly w-1/3 bg-homepage bg-fixed">
+    <div className="flex lg:min-height:100% h-screen bg-homepage bg-fixed justify-center">
+        <div className="grid grid-cols-3 gap-2 justify-evenly w-3/4 lg:w-1/3 bg-homepage bg-fixed">
             <div className="col-span-3">
 
             </div>
@@ -30,7 +30,7 @@ const HomePage = () => {
                   alt='Hello!'
                 /> 
             </div>
-            <div className='text-right font-system text-[#413702] text-lg  md:text-2xl lg:text-4xl p-4'>
+            <div className='text-right font-system text-[#413702] text-sm  md:text-lg lg:text-4xl md:p-4'>
                 Welcome to the personal website of Alex Jans
             </div>
             <NavLink className='' to='/Portfolio'>
