@@ -1,16 +1,131 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom';
-import portfolioHeader from '../assets/images/PortfolioHeader.gif';
+import portfolioHeader from '../assets/images/Portfolio Header.png';
 import videosHeader from '../assets/images/Video Header.png';
 import artHeader from '../assets/images/Art Header.png';
 //imports for pieces of Art
 import Artwork1 from '../assets/images/Bella Cartoon.png';
 import Artwork2 from '../assets/images/Self portrait.png';
 import Artwork3 from '../assets/images/Pydjum Valentines less texture.png';
+import kalecabbagebrocolli from '../assets/images/Kale, Cabbage, Brocolli.jpg';
+import { Rnd } from 'react-rnd';
 
 
 const Portfolio = () => {
   return (
+    <div className="flex h-full bg-cork bg-fixed bg-repeat justify-center">
+        <Rnd
+            default={{
+            x: 500,
+            y: 30,
+            width: 300,
+            height: 180,
+            }}
+            lockAspectRatio={true}
+            minWidth={100}
+
+        >
+            <img
+                className='h-full w-full pixel'
+                src={portfolioHeader}
+                alt='Index card that says "Portfolio"'
+            /> 
+        </Rnd>
+        <Rnd
+            default={{
+            x: 100,
+            y: 50,
+            width: 200,
+            height: 200,
+            }}
+            lockAspectRatio={true}
+            minWidth={100}
+
+        >
+            <img
+                className='h-full w-full pixel'
+                src={videosHeader}
+                alt='Sticky note that says "Videos"'
+            /> 
+        </Rnd>
+        <Rnd
+            default={{
+            x: 900,
+            y: 50,
+            width: 200,
+            height: 200,
+            }}
+            lockAspectRatio={true}
+            minWidth={100}
+
+        >
+            <img
+                className='h-full w-full pixel'
+                src={artHeader}
+                alt='Sticky note that says "art"'
+            /> 
+        </Rnd>
+        <Rnd
+            default={{
+            x: 50,
+            y: 250,
+            width: 320,
+            height: 240,
+            }}
+            lockAspectRatio={true}
+            minWidth={100}
+
+        >
+            <iframe className='h-full w-full'  src="https://www.youtube.com/embed/6tet8p_UsPA?si=QVSXStb9lp-oNwIu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </Rnd>
+        <Rnd
+            default={{
+            x: 80,
+            y: 560,
+            width: 320,
+            height: 240,
+            }}
+            lockAspectRatio={true}
+            minWidth={100}
+
+        >
+            <iframe className='h-full w-full'  src="https://www.youtube.com/embed/HXku_5jckAM?si=lsKfOMFmcBNaTF6n" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </Rnd>
+        <Rnd
+            default={{
+            x: 430,
+            y: 360,
+            width: 320,
+            height: 240,
+            }}
+            lockAspectRatio={true}
+            minWidth={100}
+
+        >
+            <iframe className='h-full w-full'  src="https://www.youtube.com/embed/1d7fDApiG3M?si=1fYZRXktJoncHKCL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            </iframe>
+        </Rnd>
+        <Rnd
+            default={{
+            x: 850,
+            y: 360,
+            width: 476,
+            height: 378,
+            }}
+            lockAspectRatio={true}
+            minWidth={100}
+
+        >
+            <img
+                className='h-full w-full'
+                src={kalecabbagebrocolli}
+                alt='A still life of kale, cabbage, and brocolli'
+            /> 
+        </Rnd>
+    </div>
+  );
     <div className='flex flex-col'>
         <div className= 'flex w-screen justify-between '>
             <img
@@ -69,7 +184,7 @@ const Portfolio = () => {
         </div>
     </div>
 
-  )
+  
 }
 
 export default Portfolio
