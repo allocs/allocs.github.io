@@ -30,7 +30,7 @@ const HomePage = () => {
                   alt='Hello!'
                 /> 
             </div>
-            <div className='text-right font-system text-[#413702] text-sm  md:text-lg lg:text-2xl md:py-8'>
+            <div className='inline-block self-center text-right font-system text-[#413702] text-sm  md:text-lg lg:text-2xl align-middle'>
                 Welcome to the website of Alex Jans
             </div>
             <NavLink className='' to='/Portfolio'>
