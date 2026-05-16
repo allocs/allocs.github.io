@@ -21,17 +21,28 @@ const artCoords = [19,1100];
 const videoDims = [384,216, .8];
 const spacing = [0,225];
 if (screen.width > 1024){
-    portfolioCoords[0] = screen.width*(0.35);
-    portfolioCoords[1] = 15;
-    videoCoords[0] = 10;
-    videoCoords[1] = 100;
-    artCoords[0] = screen.width*.4;
-    artCoords[1] = 98;
-    videoDims[0] = 480;
-    videoDims[1] = 270;
-    videoDims[2] = 1;
-    spacing[0] = screen.width*.2;
-    spacing[1] = 135;
+    if (screen.width > 1920){
+        portfolioCoords[0] = screen.width*(0.35);
+        portfolioCoords[1] = 15;
+        videoCoords[0] = 10;
+        videoCoords[1] = 100;
+        artCoords[0] = screen.width*.4;
+        artCoords[1] = 98;
+        videoDims[0] = 480;
+        videoDims[1] = 270;
+        videoDims[2] = 1;
+        spacing[0] = screen.width*.2;
+        spacing[1] = 135;
+    } else {
+        portfolioCoords[0] = screen.width*(0.35);
+        portfolioCoords[1] = 15;
+        videoCoords[0] = 10;
+        videoCoords[1] = 100;
+        artCoords[0] = screen.width*.4;
+        artCoords[1] = 98;
+        spacing[0] = screen.width*.2;
+        spacing[1] = 100;
+    }
 }
 
 const Portfolio = () => {
