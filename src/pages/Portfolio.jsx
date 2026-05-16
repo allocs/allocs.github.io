@@ -47,7 +47,7 @@ if (screen.width > 1024){
 
 const Portfolio = () => {
   return (
-    <div className="flex h-full w-screen bg-cork bg-fixed bg-repeat overflow-x-clip object-contain">
+    <div className="flex h-full min-h-[calc(100vh-80px)] w-screen bg-cork bg-repeat overflow-x-clip object-contain">
 
             <Rnd
                 className='flex object-contain overflow-x-clip'
@@ -59,7 +59,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
-
+                bounds= {"parent"}
             >
                 <img
                     className='h-full w-full pixel'
@@ -77,6 +77,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
 
             >
                 <img
@@ -95,6 +96,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
 
             >
                 <img
@@ -113,6 +115,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
 
             >   
                 <iframe className='h-full w-full p-4'  src="https://www.youtube.com/embed/6tet8p_UsPA?si=QVSXStb9lp-oNwIu" title="Growth" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
@@ -127,6 +130,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
                 className='justify-center'
 
             >
@@ -143,6 +147,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
 
             >
 
@@ -158,6 +163,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
 
             >
                 <img
@@ -176,6 +182,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
 
             >
                 <img
@@ -194,6 +201,7 @@ const Portfolio = () => {
                 }}
                 lockAspectRatio={true}
                 minWidth={100}
+                bounds= {"parent"}
 
             >
                 <img
