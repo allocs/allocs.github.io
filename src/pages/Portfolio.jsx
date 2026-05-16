@@ -38,19 +38,19 @@ if (screen.width > 1024){
         portfolioCoords[1] = 15;
         videoCoords[0] = 10;
         videoCoords[1] = 100;
-        artCoords[0] = screen.width*.5;
+        artCoords[0] = screen.width*.47;
         artCoords[1] = 98;
-        spacing[0] = screen.width*.3;
+        spacing[0] = screen.width*.22;
         spacing[1] = 100;
     }
 }
 
 const Portfolio = () => {
   return (
-    <div className="flex h-full bg-cork bg-fixed bg-repeat">
+    <div className="flex h-full w-screen bg-cork bg-fixed bg-repeat overflow-x-clip object-contain">
 
             <Rnd
-                className='col-span-2'
+                className='flex object-contain overflow-x-clip'
                 default={{
                 x: portfolioCoords[0],
                 y: portfolioCoords[1],
