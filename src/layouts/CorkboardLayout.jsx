@@ -56,9 +56,7 @@ const CorkboardLayout = () => {
             </div>
            </div>
         </nav>
-        <div className="h-full min-h-[calc(100vh-80px)] bg-cork">
-            <Outlet />
-        </div>
+        <Outlet />
     </>
   )
 }

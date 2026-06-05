@@ -17,9 +17,10 @@ import { Rnd } from 'react-rnd';
 //an ipad pro's width is 1024. That seems like a good cut off
 const portfolioCoords = [15, 15];
 const videoCoords = [19,200];
-const artCoords = [19,1100];
+const artCoords = [19,1650];
 const videoDims = [384,216, .8];
 const spacing = [0,225];
+const divClassName = "flex h-screen min-h-[" + (videoCoords[1] + (spacing[1]*5) + videoDims[1] + 10) + "] w-screen bg-cork bg-repeat overflow-x-clip object-contain";
 if (screen.width > 1024){
     if (screen.width > 1920){
         portfolioCoords[0] = screen.width*(0.35);
@@ -47,7 +48,7 @@ if (screen.width > 1024){
 
 const Portfolio = () => {
   return (
-    <div className="flex h-full min-h-[calc(100vh-80px)] w-screen bg-cork bg-repeat overflow-x-clip object-contain">
+    <div className='flex min-h-[calc(100vh-80px)] h-[2750px] 2xl:h-[calc(100vh-80px)] w-screen bg-cork bg-repeat overflow-x-clip object-contain'>
 
             <Rnd
                 className='flex object-contain overflow-x-clip'
@@ -132,9 +133,7 @@ const Portfolio = () => {
                 minWidth={100}
                 bounds= {"parent"}
                 className='justify-center'
-
             >
-
                 <iframe className='h-full w-full p-4'  src="https://www.youtube.com/embed/HXku_5jckAM?si=lsKfOMFmcBNaTF6n" title="Bella's family" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                 </iframe>
             </Rnd>
@@ -148,13 +147,38 @@ const Portfolio = () => {
                 lockAspectRatio={true}
                 minWidth={100}
                 bounds= {"parent"}
-
             >
-
                 <iframe className='h-full w-full p-4'  src="https://www.youtube.com/embed/1d7fDApiG3M?si=1fYZRXktJoncHKCL" title="Between the Lines Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
                 </iframe>
             </Rnd>
-                        < Rnd
+            <Rnd
+                default={{
+                x: videoCoords[0] - 10,
+                y: videoCoords[1] + (spacing[1]*4),
+                width: videoDims[0],
+                height: videoDims[1],
+                }}
+                lockAspectRatio={true}
+                minWidth={100}
+                bounds= {"parent"}
+                className='justify-center'
+            >
+                <iframe className='h-full w-full p-4' src="https://player.vimeo.com/video/1195742348?h=13445f6898&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="NDT Eforms 2 1"></iframe>
+            </Rnd>
+            <Rnd
+                default={{
+                x: videoCoords[0] +3 + spacing[0],
+                y: videoCoords[1] + (spacing[1]*5),
+                width: videoDims[0],
+                height: videoDims[1],
+                }}
+                lockAspectRatio={true}
+                minWidth={100}
+                bounds= {"parent"}
+            >
+                <iframe className='h-full w-full p-4' src="https://player.vimeo.com/video/1180592747?h=a1210ed80e&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Issue Spotting 1"></iframe>
+            </Rnd>
+            < Rnd
                 default={{
                 x: artCoords[0] ,
                 y: artCoords[1] + spacing[1],

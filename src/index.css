@@ -10,4 +10,8 @@
     .pixel{
         image-rendering: pixelated;
     }
-  }
+}
+
+@theme {
+    --breakpoint-3xl: 122rem
+}
