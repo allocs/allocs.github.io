@@ -14,15 +14,15 @@ return(
     <ParallaxProvider scrollAxis='vertical'>
         <Parallax speed={-99999} className='bg-[#31406E] w-full h-screen'/>
         <Parallax speed={-60} className='overflow-hidden absolute inset-0 w-full h-auto'>
-                <img  className='w-full' src={bannerBottom}>
+                <img  className='rotate-90 lg:rotate-0 h-full w-full lg:w-full lg:h-auto' src={bannerBottom}>
                 </img>
         </Parallax> 
-        <Parallax speed={-40} className='overflow-hidden absolute inset-0 w-full h-auto'>
-                <img  className='w-full' src={bannerMiddle}>
+        <Parallax speed={-40} className='overflow-hidden absolute inset-0 w-full h-screen lg:h-auto'>
+                <img  className=' rotate-90 lg:rotate-0 h-full w-full lg:w-full lg:h-auto' src={bannerMiddle}>
                 </img>
         </Parallax> 
         <Parallax speed={-20} className='overflow-hidden absolute inset-0 w-full h-auto'>
-                <img  className='w-full' src={bannerTop}>
+                <img  className='rotate-90 lg:rotate-0 h-full w-full lg:w-full lg:h-auto' src={bannerTop}>
                 </img>
         </Parallax>   
             {/* <Parallax speed={-40} className="overflow-x-hidden absolute w-screen inset-0 bg-cover bg-fixed parallax-bg bg-[url('/src/assets/images/aboutBannerMiddle.png')]"/> */}
@@ -33,36 +33,36 @@ return(
                 <NavLink className='relative flex text-[#CEECCF] text-xl col-span-3' to='/'>
                     Back
                 </NavLink>
-                <div className='h-64 col-span-3'></div>
-                    <div className='text-4xl text-left w-32' >
+                <div className='h-32 lg:h-64 col-span-3'></div>
+                    <div className='text-2xl lg:text-4xl text-left w-16 lg:w-32' >
                         about alex jans
                     </div>
-                    <div className='relative flex-column justify-center items-end p-4 text-left'>
-                        <div className='p-16 xl:p-32 text-center'>
+                    <div className='relative flex-column justify-center items-end p-4 text-left col-span-2 lg:col-span-1'>
+                        <div className='py-16 xl:p-32 text-center'>
                             Hi! I'm Alex. I made this website to share some of the things I make.
                         </div>
                         <div className='h-1/4'/>
-                        <div className='p-4 text-lg'>
+                        <div className='p-4 text-base lg:text-lg'>
                             I do a lot of random art, so my portfolio is a mix of some videos, some images, and a game.
                         </div>
-                        <div className='p-4 text-lg'>
+                        <div className='p-4 text-baselg:text-lg'>
                             This website is also a portfolio piece. It has gotten me a lot more experience with HTML, CSS, JavaScript, etc.
                         </div>
-                        <div className='p-4 text-lg'>
+                        <div className='p-4 text-base lg:text-lg'>
                             On top of all the art assets I made.
                         </div>
-                        <div className='p-4 text-lg'>
+                        <div className='p-4 text-base lg:text-lg'>
                             Even the sketches and studies you see behind the text here.
                         </div>
-                        <div className='p-4 text-lg'>
+                        <div className='p-4 text-base lg:text-lg'>
                             I don't know what else to write here as I feel that the website shows you plenty to get to know me...
                         </div>
-                         <div className='p-4 text-lg'>
+                         <div className='p-4 text-base lg:text-lg'>
                             <NavLink className='flex flex-shrink-0 mr-4' to='/Resume'>
                             ...so here is my resume. 
                             </NavLink>
                         </div>
-                        <div className='p-4'>
+                        <div className='p-4 text-lg lg:text-xl'>
                             Thanks for visiting!
                         </div>
                     </div>
