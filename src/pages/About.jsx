@@ -4,70 +4,41 @@ import resume from '../assets/images/Alexandra Jans - Resume.png';
 import bannerBottom from '../assets/images/aboutBannerBottom.png';
 import bannerMiddle from '../assets/images/aboutBannerMiddle.png';
 import bannerTop from '../assets/images/aboutBannerTop.png';
-import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
+import { Parallax, ParallaxProvider, } from 'react-scroll-parallax';
 
 const Nowhere = () => {
 
 return(
-    <ParallaxProvider className='absolute overflow-hidden bg-[#31406E] h-screen bg-fixed'>
-            <Parallax speed={0} className='absolute inset-0 flex justify-center bg-[#31406E]'>
-                <NavLink className='absolute inset-4 flex flex-shrink-0 mr-4 text-[#CEECCF] text-xl' to='/'>
+    <div className='bg-[#31406E] w-full h-screen '>
+
+    <ParallaxProvider scrollAxis='vertical'>
+        <Parallax speed={-99999} className='bg-[#31406E] w-full h-screen'/>
+        <Parallax speed={-60} className='overflow-hidden absolute inset-0 w-full h-auto'>
+                <img  className='w-full' src={bannerBottom}>
+                </img>
+        </Parallax> 
+        <Parallax speed={-40} className='overflow-hidden absolute inset-0 w-full h-auto'>
+                <img  className='w-full' src={bannerMiddle}>
+                </img>
+        </Parallax> 
+        <Parallax speed={-20} className='overflow-hidden absolute inset-0 w-full h-auto'>
+                <img  className='w-full' src={bannerTop}>
+                </img>
+        </Parallax>   
+            {/* <Parallax speed={-40} className="overflow-x-hidden absolute w-screen inset-0 bg-cover bg-fixed parallax-bg bg-[url('/src/assets/images/aboutBannerMiddle.png')]"/> */}
+            {/* <Parallax speed={-20} className="overflow-x-hidden absolute w-screen inset-0 bg-cover bg-fixed parallax-bg bg-[url('/src/assets/images/aboutBannerTop.png')]"/> */}
+            <Parallax speed={0} className='absolute inset-0'>
+                <div className='flex w-auto h-auto '>
+                <div className='grid grid-cols-3 gap-2  text-center text-[#CEECCF] text-4xl h-screen w-screen'>
+                <NavLink className='relative flex text-[#CEECCF] text-xl col-span-3' to='/'>
                     Back
                 </NavLink>
-                <div className='flex text-center text-[#CEECCF] text-4xl h-screen w-screen items-center p-4'>
-                    <div className='text-4xl'>
+                <div className='h-64 col-span-3'></div>
+                    <div className='text-4xl text-left w-32' >
                         about alex jans
                     </div>
-                    <div className='static flex-column justify-center items-end w-screen p-4 text-left bg-[#31406E]'>
-                        <div className='h-3/4'/>
-                        <div className='p-32 text-center'>
-                            Hi! I'm Alex. I made this website to share some of the things I make.
-                        </div>
-                        <div className='h-1/4'/>
-                        <div className='p-4 text-lg'>
-                            I do a lot of random art, so my portfolio is a mix of some videos, some images, and a game.
-                        </div>
-                        <div className='p-4 text-lg'>
-                            This website is also a portfolio piece. It has gotten me a lot more experience with HTML, CSS, JavaScript, etc.
-                        </div>
-                        <div className='p-4 text-lg'>
-                            On top of all the art assets I made.
-                        </div>
-                        <div className='p-4 text-lg'>
-                            Even the sketches and studies you see behind the text here.
-                        </div>
-                        <div className='p-4 text-lg'>
-                            I don't know what else to write here as I feel that the website shows you plenty to get to know me...
-                        </div>
-                         <div className='p-4 text-lg'>
-                            <NavLink className='flex flex-shrink-0 mr-4' to='/Resume'>
-                            ...so here is my resume. 
-                            </NavLink>
-                        </div>
-                        <div>
-                            Thanks for visiting!
-                        </div>
-                    </div>
-                    <div className='flex w-1/4'>
-                        
-                    </div>
-                </div>
-                
-            </Parallax>
-        <Parallax speed={-80}    className="relative h-screen bg-fixed bg-cover bg-[url('/src/assets/images/aboutBannerBottom.png')]"/>
-            <Parallax speed={-40} className="absolute inset-0 bg-cover bg-fixed parallax-bg bg-[url('/src/assets/images/aboutBannerMiddle.png')]"/>
-            <Parallax speed={-20} className="absolute inset-0 bg-cover bg-fixed parallax-bg bg-[url('/src/assets/images/aboutBannerTop.png')]"/>
-            <Parallax speed={0} className='absolute inset-0 flex justify-center'>
-                <NavLink className='absolute inset-4 flex flex-shrink-0 mr-4 text-[#CEECCF] text-xl' to='/'>
-                    Back
-                </NavLink>
-                <div className='flex text-center text-[#CEECCF] text-4xl h-screen w-screen items-center p-4'>
-                    <div className='text-4xl'>
-                        about alex jans
-                    </div>
-                    <div className='static flex-column justify-center items-end w-screen p-4 text-left'>
-                        <div className='h-3/4'/>
-                        <div className='p-32 text-center'>
+                    <div className='relative flex-column justify-center items-end p-4 text-left'>
+                        <div className='p-16 xl:p-32 text-center'>
                             Hi! I'm Alex. I made this website to share some of the things I make.
                         </div>
                         <div className='h-1/4'/>
@@ -99,10 +70,10 @@ return(
                         
                     </div>
                 </div>
-                
+            </div>
             </Parallax>
-
     </ParallaxProvider>
+    </div>
 )
 
 // return(
