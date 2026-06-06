@@ -7,7 +7,7 @@ import backArrowStill from '../assets/images/Back Home Arrow Static.png'
 
 const CorkboardLayout = () => {
   return (
-    <>
+    <banner>
         <nav className= 'bg-[#f8f7e6]'>
           <div className='mx-auto max-w-7x1  px-8'>
             <div className='flex h-20 items-center justify-between'>
@@ -19,14 +19,14 @@ const CorkboardLayout = () => {
                             <img
                                 className='h-10 md:h-16 w-auto'
                                 src={AlexJansStill}
-                                alt='Label that reads "property of Alexandra Jans"'
+                                alt='Label that reads "property of Alexandra Jans". It is a button that takes you home'
                             />
                         </div>
                         <div className="hidden group-hover:flex">
                             <img
                                 className='h-10 md:h-16 w-auto'
                                 src={AlexJansAnimated}
-                                alt='Label that reads "property of Alexandra Jans"'
+                                alt='Label that reads "property of Alexandra Jans". It is a button that takes you home'
                             />
                         </div>
                     </div>
@@ -57,7 +57,7 @@ const CorkboardLayout = () => {
            </div>
         </nav>
         <Outlet />
-    </>
+    </banner>
   )
 }
 

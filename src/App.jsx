@@ -36,9 +36,9 @@ const router = createBrowserRouter(
     </Route>
     <Route element={<CorkboardLayout/>}>
       <Route path='/Portfolio' element={<Portfolio/>}/>
-      <Route path='/About' element={<About/>}/>
       <Route path='/Resume' element={<Resume/>}/>
     </Route>
+    <Route path='/About' element={<About/>}/>
     <Route path='/JamMate' element={<JamMateExtra/>}>
       <Route index element={<JamMateHomePage/>} />
     </Route>
